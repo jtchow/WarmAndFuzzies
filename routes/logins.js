@@ -11,16 +11,16 @@ router.post('/signup', function(req,res) {
     const lastName = req.body.lastName;
     const email = req.body.email;
 
-    bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+    bcrypt.hash(req.body.password, saltRounds, function (err, passwordHash) {
         const newUser = new User({
             username,
             firstName,
             lastName,
             email,
-            hash
+            passwordHash
         });
     });    
-    
+
     // TODO add metadata like date 
     newUser.save()
     .then(() => res.json('User successfully added!'))
