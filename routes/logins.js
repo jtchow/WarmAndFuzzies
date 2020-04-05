@@ -1,23 +1,27 @@
-const express = require('express')
-const router = express.Router()
-let User = require('../models/user.model')
+const express = require('express');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const router = express.Router();
+let User = require('../models/user.model');
+
 
 router.post('/signup', function(req,res) {
     const username = req.body.name;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
-    const password = req.body.password;         // TODO encrypt password somewhere/ don't use plaintext
+
+    bcrypt.hash(req.body.password, saltRounds, function (err, passwordHash) {
+        const newUser = new User({
+            username,
+            firstName,
+            lastName,
+            email,
+            passwordHash
+        });
+    });    
+
     // TODO add metadata like date 
-
-    const newUser = new User({
-        username,
-        firstName,
-        lastName,
-        email,
-        password
-    });
-
     newUser.save()
     .then(() => res.json('User successfully added!'))
     .catch(err => res.status(400).json('Error: ' + err))
