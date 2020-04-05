@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const logins = require('./routes/logins')
+const notes = require('./routes/notes')
 require('dotenv').config();
 
 
@@ -24,6 +25,7 @@ const port = process.env.PORT || 5000;
 
 // define routes
 app.use('/', logins)
+app.use('/notes', notes)
 
 
 // start server 
