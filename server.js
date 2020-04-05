@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000;
 
 
 // create mongoDB connection with my admin credentials 
-const uri = 'mongodb+srv://jtchow:k0DE0ylBUdX8zsLo@warmandfuzzies-jurjp.mongodb.net/test?retryWrites=true&w=majority';
+const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
 );
 const connection = mongoose.connection;
