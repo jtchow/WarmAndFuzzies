@@ -19,7 +19,7 @@ const noteSchema = new Schema(
             required: true
         }
     },
-    
+
     {
         timestamp: true
     }
