@@ -24,8 +24,8 @@ const port = process.env.PORT || 5000;
 
 
 // define routes
-app.use('/', logins)
-app.use('/notes', notes)
+app.use('/', logins);
+app.use('/notes', notes);
 
 
 // start server 
