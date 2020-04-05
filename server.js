@@ -1,8 +1,8 @@
 // define requirements
 const express = require('express');
 const mongoose = require('mongoose');
-const logins = require('./routes/logins')
-const notes = require('./routes/notes')
+const logins = require('./routes/logins');
+const notes = require('./routes/notes');
 require('dotenv').config();
 
 
