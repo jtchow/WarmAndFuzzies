@@ -1,5 +1,5 @@
-const express = require('express')
-const router = express.Router()
+const express = require('express');
+const router = express.Router();
 let Note = require('../models/note.model');
 
 router.get('/view', function(req,res) {

@@ -1,6 +1,9 @@
-const express = require('express')
-const router = express.Router()
-let User = require('../models/user.model')
+const express = require('express');
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+const router = express.Router();
+let User = require('../models/user.model');
+
 
 router.post('/signup', function(req,res) {
     const username = req.body.name;
