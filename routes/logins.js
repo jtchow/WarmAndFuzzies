@@ -10,17 +10,18 @@ router.post('/signup', function(req,res) {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
-    const password = req.body.password;         // TODO encrypt password somewhere/ don't use plaintext
+
+    bcrypt.hash(req.body.password, saltRounds, function (err, hash) {
+        const newUser = new User({
+            username,
+            firstName,
+            lastName,
+            email,
+            hash
+        });
+    });    
+    
     // TODO add metadata like date 
-
-    const newUser = new User({
-        username,
-        firstName,
-        lastName,
-        email,
-        password
-    });
-
     newUser.save()
     .then(() => res.json('User successfully added!'))
     .catch(err => res.status(400).json('Error: ' + err))
