@@ -1,38 +1,30 @@
-.App {
-  text-align: center;
+body > div {
+  background-color: rgb(60, 116, 180);
+  background-position-y: 50px;
+  width: 100%;
+  height: 100vh;
+  background-image: url('tomo-trans-logo.png');
+  /* replace image with tomo mammoth shirt front */
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.navbar-custom { 
+  background-color: #f0f6fc;
+  height: 50px;
+  } 
+  /* Modify brand and text color */ 
+    
+.navbar-custom .navbar-brand { 
+  color: rgb(77, 77, 77);
+  padding-left: 1%;
+  padding-top: 10px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.navbar-custom .navbar-collapse {
+  float: right;
+  padding-right: 1%;
+  padding-top: 5px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#profile-link {
+  color: rgb(123, 126, 129);
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css"
 
 import MyNav from './components/MyNavbar';
 import WriteFuzzies from './components/WriteFuzzies';
