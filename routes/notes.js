@@ -5,7 +5,6 @@ let Note = require('../models/note.model');
 
 // View notes endpoint 
 router.get('/view', function(req,res) {
-    // grab request arguments 
     const selectedUser = req.body.user;
 
     // search notes collection for the selected user and return data
@@ -18,7 +17,6 @@ router.get('/view', function(req,res) {
 
 // Send note endpoint
 router.post('/send', function(req,res) {
-    // grab request arguments
     const sender = req.body.sender;
     const recipient = req.body.recipient;
     const contents = req.body.contents;
@@ -35,5 +33,6 @@ router.post('/send', function(req,res) {
     .then(() => res.send('Sent warm and fuzzy!'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
+
 
 module.exports = router;
