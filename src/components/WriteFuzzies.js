@@ -1,7 +1,12 @@
 import React from 'react';
-// for later
-// import {Typeahead} from 'react-bootstrap-typeahead';
-// import 'react-bootstrap-typeahead/css/Typeahead.css';
+import {Typeahead} from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
+
+
+/*
+todo: need to figure out how to pass props using router
+style name list based on who youve sent or not sent fuzzies to
+*/
 
 export default class WriteFuzzies extends React.Component
 {
@@ -68,8 +73,7 @@ export default class WriteFuzzies extends React.Component
 
     render()
     {
-        const dropdownNames = [["Tyler", 0], ["Kasey", 1], ["Jason", 1], ["Annie", 0]].map(name => 
-                    <option key={name[0]} value={name[0]}>{name[0]}</option>);
+        const recipientNames = ["Annie", "Jason", "Kasey", "Tyler"];
         //name list needs to be passed from props or use api call somewhere
         
         let styling = {
@@ -91,10 +95,15 @@ export default class WriteFuzzies extends React.Component
                         <h3 style={{color: "rgb(78, 81, 84)"}}>Select a recipient and write a warm and fuzzy!</h3>
                         <br/>
                         <div style={{width: "96%", marginLeft: "2%", marginRight: "2%"}}>
-                            <select className="form-control" id="exampleFormControlSelect1" value={this.state.recipient} onChange={this.handleRecipientChange}>
-                                <option value="">Select a recipient</option>
-                                {dropdownNames}
-                            </select>
+                            <Typeahead
+                            id="recipient list"
+                            onChange={(selected) => {
+                                this.setState({recipient: selected[0]});
+                            }}
+                            options={recipientNames}
+                            selected={[this.state.recipient]}
+                            placeholder="Select a recipient"
+                            />
                         </div>
                     </div>
 
