@@ -3,7 +3,10 @@ const router = express.Router();
 let Note = require('../models/note.model');
 
 router.get('/view', function(req,res) {
+    // grab request arguments 
     const selectedUser = req.body.user;
+
+    // search notes collection for the selected user and return data
     Note.find({recipient: selectedUser},(err,data)=>{
         if(err) res.send(err)
           res.send(data)
