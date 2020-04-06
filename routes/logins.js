@@ -21,7 +21,6 @@ router.post('/signup', function(req,res) {
         });
     });    
 
-    // TODO add metadata like date 
     newUser.save()
     .then(() => res.json('User successfully added!'))
     .catch(err => res.status(400).json('Error: ' + err))
