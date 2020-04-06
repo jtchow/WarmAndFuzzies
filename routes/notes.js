@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 let Note = require('../models/note.model');
 
+
+// View notes endpoint 
 router.get('/view', function(req,res) {
     // grab request arguments 
     const selectedUser = req.body.user;
@@ -13,6 +15,8 @@ router.get('/view', function(req,res) {
           });  
 });
 
+
+// Send note endpoint
 router.post('/send', function(req,res) {
     // grab request arguments
     const sender = req.body.sender;
