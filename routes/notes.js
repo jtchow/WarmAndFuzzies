@@ -11,16 +11,19 @@ router.get('/view', function(req,res) {
 });
 
 router.post('/send', function(req,res) {
+    // grab request arguments
     const sender = req.body.sender;
     const recipient = req.body.recipient;
     const contents = req.body.contents;
 
+    // create new Note object for DB insertion
     const newNote = new Note({
         sender,
         recipient,
         contents
     });
 
+    // save note to DB and send response or error message
     newNote.save()
     .then(() => res.send('Sent warm and fuzzy!'))
     .catch(err => res.status(400).json('Error: ' + err));
