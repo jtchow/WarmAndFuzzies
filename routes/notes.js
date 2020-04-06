@@ -3,7 +3,11 @@ const router = express.Router();
 let Note = require('../models/note.model');
 
 router.get('/view', function(req,res) {
-    res.send("here's all your notes!")
+    const selectedUser = req.body.user;
+    Note.find({recipient: selectedUser},(err,data)=>{
+        if(err) res.send(err)
+          res.send(data)
+          });  
 });
 
 router.post('/send', function(req,res) {
@@ -18,7 +22,7 @@ router.post('/send', function(req,res) {
     });
 
     newNote.save()
-    .then(() => res.json('Sent warm and fuzzy!'))
+    .then(() => res.send('Sent warm and fuzzy!'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
