@@ -1,11 +1,8 @@
 import React from 'react';
-// import {Typeahead} from 'react-bootstrap-typeahead';
-// import 'react-bootstrap-typeahead/css/Typeahead.css';
-
 
 /*
 todo: need to figure out how to pass props using router
-style name list based on who youve sent or not sent fuzzies to
+add search box in dropdown
 */
 
 export default class WriteFuzzies extends React.Component
@@ -16,11 +13,13 @@ export default class WriteFuzzies extends React.Component
         this.state = {
             sender: props.userid,
             recipient: '',
-            message: ''
+            message: '',
+            filter: 'all'
         };
 
         this.handleRecipientChange = this.handleRecipientChange.bind(this);
         this.handleMessageChange = this.handleMessageChange.bind(this);
+        this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
@@ -36,6 +35,13 @@ export default class WriteFuzzies extends React.Component
         this.setState({
             message: event.target.value
         });      
+    }
+
+    handleFilterChange(event)
+    {
+        this.setState({
+            filter: event.target.value
+        });
     }
 
     handleSubmit(event)
@@ -71,8 +77,7 @@ export default class WriteFuzzies extends React.Component
 
     render()
     {
-        const recipientNames = ["Angela", "Annie", "Brandon", "Brian", "Darren", "Jason", "Kasey", "Kylie", "Kyle",
-                                "Richard", "Sarah", "Tyler Onishi", "Tyler Yin"];
+        //in future get this list from api call
         const recipients = [
             {name: "Angela", id: 1},
             {name: "Annie", id: 2},
@@ -89,51 +94,50 @@ export default class WriteFuzzies extends React.Component
             {name: "Tyler Yin", id: 13}
         ];
 
-        const options = recipients.map((recipient) => (<option key={recipient.id} value={recipient.id}>{recipient.name}</option>));
+        const writtenTo = [1,3,4,5]; //list of ids of users who the user has written to--also get this from api
+
+        // user list filter functions
+        const noFilter = (recipient) => (true);
+        const filterWritten = (recipient) => (writtenTo.includes(recipient.id));
+        const filterNotWritten = (recipient) => (!writtenTo.includes(recipient.id));
+
+        // filter options here
+        const filterFunc = this.state.filter === "any" ? noFilter : this.state.filter === "written" ? filterWritten : filterNotWritten;
+        const options = recipients.filter(filterFunc).map((recipient) => (<option key={recipient.id} value={recipient.id}>{recipient.name}</option>));
         //name list needs to be passed from props or use api call somewhere
-        
-        let styling = {
-            width: "42%",
-            display: "inline-block",
-            marginLeft: "29%",
-            marginRight: "29%",
-            padding: "20px",
-            borderRadius: "15px",
-            marginTop: "5%",
-            textAlign: "center",
-            backgroundColor: "#f0f6fc"
-        };
+
 
         return (
-            <div className="write-form" style={styling}>
+            <div className="write-form" id="write-fuzzies">
                 <form onSubmit={this.handleSubmit}>
                     <div className="dropdown">
-                        <h3 style={{color: "rgb(78, 81, 84)"}}>Select a recipient and write a warm and fuzzy!</h3>
+                        <h3 id="write-label">Select a recipient and write a warm and fuzzy!</h3>
                         <br/>
-                        <div style={{width: "96%", marginLeft: "2%", marginRight: "2%"}}>
-                            {/* <Typeahead
-                            id="recipient list"
-                            onChange={(selected) => {
-                                this.setState({recipient: selected[0]});
-                            }}
-                            options={recipientNames}
-                            selected={[this.state.recipient]}
-                            placeholder="Select a recipient"
-                            /> */}
-                        
-                        <select className="form-control" value={this.state.recipient} onChange={this.handleRecipientChange}>
-                            <option value="">Select a recipient</option>
-                            {options}
-                        </select>
+
+                        <div id="filter-label">
+                            <p>Filter</p>
+                        </div>
+
+                        <div className="fuzzies-forms">
+                            <select id="filter-select" className="form-control" onChange={this.handleFilterChange}>
+                                <option value="all">All</option>
+                                <option value="not-written">Not written to</option>
+                                <option value="written">Written to</option>
+                            </select>
+
+                            <select className="form-control" value={this.state.recipient} onChange={this.handleRecipientChange}>
+                                <option value="">Select a recipient</option>
+                                {options}
+                            </select>
                         </div>
                     </div>
 
-                    <div style={{width: "96%", marginLeft: "2%", marginRight: "2%"}}>
+                    <div className="fuzzies-forms">
                         <br/>
                         <textarea className="form-control" value={this.state.message} onChange={this.handleMessageChange} style={{height: "25vh"}}></textarea>
                         
                         <br/>
-                        <button type='submit' className="btn btn-primary mb-2" style={{backgroundColor: "rgb(60, 116, 180)", borderColor: "rgb(60, 116, 180)"}}>Put in bag!</button>
+                        <button type='submit' id="write-button" className="btn btn-primary mb-2">Put in bag!</button>
                     </div>
                 </form>
             </div>
