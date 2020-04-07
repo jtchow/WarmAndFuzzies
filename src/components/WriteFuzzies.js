@@ -69,7 +69,7 @@ export default class WriteFuzzies extends React.Component
             console.log(object); //send to backend
             //check if successful--if successful clear form else dont and let them try again
             this.setState({
-                recipient: 'Select a recipient',
+                recipient: '',
                 message: ''
             });
 
