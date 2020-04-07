@@ -1,4 +1,6 @@
 import React from 'react';
+import {Typeahead} from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 /*
 todo: need to figure out how to pass props using router
@@ -14,7 +16,8 @@ export default class WriteFuzzies extends React.Component
             sender: props.userid,
             recipient: '',
             message: '',
-            filter: 'all'
+            filter: 'all',
+            filterText: 'Filter'
         };
 
         this.handleRecipientChange = this.handleRecipientChange.bind(this);
@@ -40,8 +43,10 @@ export default class WriteFuzzies extends React.Component
     handleFilterChange(event)
     {
         this.setState({
-            filter: event.target.value
+            filter: event.target.value,
+            filterText: "All"
         });
+        this.typeahead.getInstance().clear();
     }
 
     handleSubmit(event)
@@ -67,9 +72,10 @@ export default class WriteFuzzies extends React.Component
             console.log(object); //send to backend
             //check if successful--if successful clear form else dont and let them try again
             this.setState({
-                recipient: 'Select a recipient',
+                recipient: '',
                 message: ''
             });
+            this.typeahead.getInstance().clear();
 
             alert("Warm and fuzzy sent!");
         }
@@ -91,7 +97,7 @@ export default class WriteFuzzies extends React.Component
             {name: "Richard", id: 10},
             {name: "Sarah", id: 11},
             {name: "Tyler Onishi", id: 12},
-            {name: "Tyler Yin", id: 13}
+            {name: "Tyler Yin", id: 13},
         ];
 
         const writtenTo = [1,3,4,5]; //list of ids of users who the user has written to--also get this from api
@@ -102,8 +108,8 @@ export default class WriteFuzzies extends React.Component
         const filterNotWritten = (recipient) => (!writtenTo.includes(recipient.id));
 
         // filter options here
-        const filterFunc = this.state.filter === "any" ? noFilter : this.state.filter === "written" ? filterWritten : filterNotWritten;
-        const options = recipients.filter(filterFunc).map((recipient) => (<option key={recipient.id} value={recipient.id}>{recipient.name}</option>));
+        const filterFunc = this.state.filter === "all" ? noFilter : this.state.filter === "written" ? filterWritten : filterNotWritten;
+        const recipientNames = recipients.filter(filterFunc).map((recipient) => recipient.name);
         //name list needs to be passed from props or use api call somewhere
 
 
@@ -114,20 +120,24 @@ export default class WriteFuzzies extends React.Component
                         <h3 id="write-label">Select a recipient and write a warm and fuzzy!</h3>
                         <br/>
 
-                        <div id="filter-label">
-                            <p>Filter</p>
-                        </div>
+                        <div className="fuzzies-forms" id="select-div">
+                            <Typeahead 
+                                style={{width:"68%", float: "left"}}
+                                id="recipient-select"
+                                options={recipientNames}
+                                onChange={(selected) => {
+                                    let recipientID = recipients.filter((recipient) => (recipient.name === selected[0]))[0];
+                                    recipientID = recipientID === undefined ? "" : recipientID.id;
+                                    this.setState({recipient: recipientID});
+                                }}
+                                placeholder="Choose a recipient"
+                                ref={(typeahead) => this.typeahead = typeahead}
+                            />
 
-                        <div className="fuzzies-forms">
                             <select id="filter-select" className="form-control" onChange={this.handleFilterChange}>
-                                <option value="all">All</option>
+                                <option value="all">{this.state.filterText}</option>
                                 <option value="not-written">Not written to</option>
                                 <option value="written">Written to</option>
-                            </select>
-
-                            <select className="form-control" value={this.state.recipient} onChange={this.handleRecipientChange}>
-                                <option value="">Select a recipient</option>
-                                {options}
                             </select>
                         </div>
                     </div>
