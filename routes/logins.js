@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const saltRounds = 10;                      // strength of hash? something like that
 const router = express.Router();
 let User = require('../models/user.model');
 
@@ -10,6 +10,7 @@ router.post('/signup', function(req,res) {
     const lastName = req.body.lastName;
     const email = req.body.email;
 
+    // encrypt password and insert user object into DB
     bcrypt.hash(req.body.password, saltRounds, function (err, password) {
         const newUser = new User({
             firstName,
