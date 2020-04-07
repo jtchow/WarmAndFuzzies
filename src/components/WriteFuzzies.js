@@ -1,4 +1,6 @@
 import React from 'react';
+import {Typeahead} from 'react-bootstrap-typeahead';
+import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 /*
 todo: need to figure out how to pass props using router
@@ -44,6 +46,7 @@ export default class WriteFuzzies extends React.Component
             filter: event.target.value,
             filterText: "All"
         });
+        this.typeahead.getInstance().clear();
     }
 
     handleSubmit(event)
@@ -72,6 +75,7 @@ export default class WriteFuzzies extends React.Component
                 recipient: '',
                 message: ''
             });
+            this.typeahead.getInstance().clear();
 
             alert("Warm and fuzzy sent!");
         }
@@ -105,7 +109,7 @@ export default class WriteFuzzies extends React.Component
 
         // filter options here
         const filterFunc = this.state.filter === "all" ? noFilter : this.state.filter === "written" ? filterWritten : filterNotWritten;
-        const options = recipients.filter(filterFunc).map((recipient) => (<option key={recipient.id} value={recipient.id}>{recipient.name}</option>));
+        const recipientNames = recipients.filter(filterFunc).map((recipient) => recipient.name);
         //name list needs to be passed from props or use api call somewhere
 
 
@@ -117,10 +121,18 @@ export default class WriteFuzzies extends React.Component
                         <br/>
 
                         <div className="fuzzies-forms" id="select-div">
-                            <select id="recipient-select" className="form-control" value={this.state.recipient} onChange={this.handleRecipientChange}>
-                                {this.state.recipient === "" ? <option value="">Select a recipient</option> : ""}
-                                {options}
-                            </select>
+                            <Typeahead 
+                                style={{width:"68%", float: "left"}}
+                                id="recipient-select"
+                                options={recipientNames}
+                                onChange={(selected) => {
+                                    let recipientID = recipients.filter((recipient) => (recipient.name === selected[0]))[0];
+                                    recipientID = recipientID === undefined ? "" : recipientID.id;
+                                    this.setState({recipient: recipientID});
+                                }}
+                                placeholder="Choose a recipient"
+                                ref={(typeahead) => this.typeahead = typeahead}
+                            />
 
                             <select id="filter-select" className="form-control" onChange={this.handleFilterChange}>
                                 <option value="all">{this.state.filterText}</option>
