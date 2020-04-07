@@ -29,7 +29,7 @@ body > div {
   color: rgb(123, 126, 129);
 }
 
-#write-fuzzies, #user-profile {
+#write-fuzzies, #user-profile, #edit-user-profile {
   width: 42%;
   display: inline-block;
   margin-left: 29%;
@@ -43,6 +43,46 @@ body > div {
   border-color: rgba(60, 116, 180, 0.5);
   border-width: 1px;
   color: rgb(78, 81, 84);
+}
+
+#user-profile{
+  width: 54%;
+  margin-left: 23%;
+  margin-right: 23%;
+  text-align: right;
+  margin-top: 8%;
+}
+
+#edit-user-profile {
+  width: 54%;
+  margin-left: 23%;
+  margin-right: 23%;
+}
+
+.form-control {
+  width: 90%;
+  margin-left: 10%;
+}
+
+.profile-picture {
+  float: left;
+  height: 190px;
+  width: 190px;
+  background-color: rgb(21, 52, 90);
+  border-radius: 50%;
+  margin-left: 5%;
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  background-image: url("tomo-trans-logo.png");
+}
+
+#profile-text-container {
+  width: 55%;
+  float: right;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-right: 5%;
 }
 
 #write-label {
@@ -72,7 +112,7 @@ body > div {
   margin-bottom: 30px;
 }
 
-#write-button, #edit-profile-button {
+#write-button, #edit-profile-button, #profile-save-button {
   background-color: rgb(60, 116, 180);
   border-color: rgb(60, 116, 180);
 }
