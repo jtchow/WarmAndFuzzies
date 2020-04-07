@@ -1,38 +1,75 @@
-.App {
+body > div {
+  background-color: rgb(60, 116, 180);
+  background-position-y: 50px;
+  width: 100%;
+  height: 100vh;
+  background-image: url('tomo-trans-logo.png');
+  /* replace image with tomo mammoth shirt front */
+}
+
+.navbar-custom { 
+  background-color: #f0f6fc;
+  height: 50px;
+  }
+    
+.navbar-custom .navbar-brand { 
+  color: rgb(77, 77, 77);
+  padding-left: 1%;
+  padding-top: 10px;
+  font-weight: 450;
+}
+
+.navbar-custom .navbar-collapse {
+  float: right;
+  padding-right: 1%;
+  padding-top: 5px;
+}
+
+#profile-link {
+  color: rgb(123, 126, 129);
+}
+
+#write-fuzzies {
+  width: 42%;
+  display: inline-block;
+  margin-left: 29%;
+  margin-right: 29%;
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 5%;
   text-align: center;
+  background-color: #f0f6fc;
+  border-style: solid;
+  border-color: rgba(60, 116, 180, 0.5);
+  border-width: 1px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#write-label {
+  color: rgb(78, 81, 84);
+  margin-top: 1%;
+  margin-bottom: 3%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.fuzzies-forms {
+  width: 92%;
+  margin-left: 4%;
+  margin-right: 4%;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#filter-label {
+  margin-left: 4%;
+  margin-right: 2%;
+  margin-top: 5px;
+  float: left;
+  color: rgb(78, 81, 84);
 }
 
-.App-link {
-  color: #61dafb;
+#filter-select {
+  width: 30%;
+  margin-bottom: 5px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#write-button {
+  background-color: rgb(60, 116, 180);
+  border-color: rgb(60, 116, 180);
 }
