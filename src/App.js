@@ -1,14 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route} from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./App.css"
+
+import MyNav from './components/MyNavbar';
+import WriteFuzzies from './components/WriteFuzzies';
+import UserView from './components/User';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1> WARM AND FUZZIES! </h1>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <MyNav />
+        <br/>
+        <Route path="/" exact component={WriteFuzzies}/>
+        {/* Change the write fuzzies component when writing period is done to viewing component */}
+        <Route path="/user-profile" exact component={UserView} />
+      </div>
+  </Router>
   );
 }
 
