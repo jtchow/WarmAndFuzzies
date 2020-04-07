@@ -10,8 +10,7 @@ body > div {
 .navbar-custom { 
   background-color: #f0f6fc;
   height: 50px;
-  } 
-  /* Modify brand and text color */ 
+  }
     
 .navbar-custom .navbar-brand { 
   color: rgb(77, 77, 77);
