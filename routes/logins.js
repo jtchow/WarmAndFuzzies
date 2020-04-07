@@ -19,11 +19,11 @@ router.post('/signup', function(req,res) {
             email,
             passwordHash
         });
-    });    
 
-    newUser.save()
-    .then(() => res.json('User successfully added!'))
-    .catch(err => res.status(400).json('Error: ' + err))
+        newUser.save()
+        .then(() => res.json('User successfully added!'))
+        .catch(err => res.status(400).json('Error: ' + err))
+    });    
 });
 
 router.post('/login', function(req,res) {
