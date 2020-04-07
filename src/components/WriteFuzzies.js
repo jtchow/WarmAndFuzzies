@@ -1,6 +1,6 @@
 import React from 'react';
-import {Typeahead} from 'react-bootstrap-typeahead';
-import 'react-bootstrap-typeahead/css/Typeahead.css';
+// import {Typeahead} from 'react-bootstrap-typeahead';
+// import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 
 /*
@@ -69,11 +69,27 @@ export default class WriteFuzzies extends React.Component
         }
     }
 
-
-
     render()
     {
-        const recipientNames = ["Annie", "Jason", "Kasey", "Tyler"];
+        const recipientNames = ["Angela", "Annie", "Brandon", "Brian", "Darren", "Jason", "Kasey", "Kylie", "Kyle",
+                                "Richard", "Sarah", "Tyler Onishi", "Tyler Yin"];
+        const recipients = [
+            {name: "Angela", id: 1},
+            {name: "Annie", id: 2},
+            {name: "Brandon", id: 3},
+            {name: "Brian", id: 4},
+            {name: "Darren", id: 5},
+            {name: "Jason", id: 6},
+            {name: "Kasey", id: 7},
+            {name: "Kylie", id: 8},
+            {name: "Kyle", id: 9},
+            {name: "Richard", id: 10},
+            {name: "Sarah", id: 11},
+            {name: "Tyler Onishi", id: 12},
+            {name: "Tyler Yin", id: 13}
+        ];
+
+        const options = recipients.map((recipient) => (<option key={recipient.id} value={recipient.id}>{recipient.name}</option>));
         //name list needs to be passed from props or use api call somewhere
         
         let styling = {
@@ -95,7 +111,7 @@ export default class WriteFuzzies extends React.Component
                         <h3 style={{color: "rgb(78, 81, 84)"}}>Select a recipient and write a warm and fuzzy!</h3>
                         <br/>
                         <div style={{width: "96%", marginLeft: "2%", marginRight: "2%"}}>
-                            <Typeahead
+                            {/* <Typeahead
                             id="recipient list"
                             onChange={(selected) => {
                                 this.setState({recipient: selected[0]});
@@ -103,7 +119,12 @@ export default class WriteFuzzies extends React.Component
                             options={recipientNames}
                             selected={[this.state.recipient]}
                             placeholder="Select a recipient"
-                            />
+                            /> */}
+                        
+                        <select className="form-control" value={this.state.recipient} onChange={this.handleRecipientChange}>
+                            <option value="">Select a recipient</option>
+                            {options}
+                        </select>
                         </div>
                     </div>
 
