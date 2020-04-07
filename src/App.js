@@ -6,6 +6,7 @@ import "./App.css"
 import MyNav from './components/MyNavbar';
 import WriteFuzzies from './components/WriteFuzzies';
 import UserView from './components/User';
+import EditUserView from './components/EditUser';
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/" exact component={WriteFuzzies}/>
         {/* Change the write fuzzies component when writing period is done to viewing component */}
         <Route path="/user-profile" exact component={UserView} />
+        <Route path="/user-profile/edit" exact component={EditUserView} />
       </div>
   </Router>
   );
