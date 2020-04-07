@@ -40,20 +40,25 @@ body > div {
   margin-top: 5%;
   text-align: center;
   background-color: #f0f6fc;
+  border-style: solid;
+  border-color: rgba(60, 116, 180, 0.5);
+  border-width: 1px;
 }
 
 #write-label {
   color: rgb(78, 81, 84);
+  margin-top: 1%;
+  margin-bottom: 3%;
 }
 
 .fuzzies-forms {
-  width: 96%;
-  margin-left: 2%;
-  margin-right: 2%;
+  width: 92%;
+  margin-left: 4%;
+  margin-right: 4%;
 }
 
 #filter-label {
-  margin-left: 2%;
+  margin-left: 4%;
   margin-right: 2%;
   margin-top: 5px;
   float: left;
