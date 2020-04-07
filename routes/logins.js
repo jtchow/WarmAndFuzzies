@@ -6,18 +6,16 @@ let User = require('../models/user.model');
 
 
 router.post('/signup', function(req,res) {
-    const username = req.body.name;
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
 
-    bcrypt.hash(req.body.password, saltRounds, function (err, passwordHash) {
+    bcrypt.hash(req.body.password, saltRounds, function (err, password) {
         const newUser = new User({
-            username,
             firstName,
             lastName,
             email,
-            passwordHash
+            password
         });
 
         newUser.save()
