@@ -54,9 +54,14 @@ body > div {
 }
 
 #edit-user-profile {
-  width: 54%;
-  margin-left: 23%;
-  margin-right: 23%;
+  width: 40%;
+  margin-left: 30%;
+  margin-right: 30%;
+  height: 315px;
+}
+
+#edit-user-form {
+  height: 40%;
 }
 
 .form-control {
@@ -112,7 +117,37 @@ body > div {
   margin-bottom: 30px;
 }
 
-#write-button, #edit-profile-button, #profile-save-button {
+#write-button, #edit-profile-button, #profile-save-button, #profile-cancel-button {
   background-color: rgb(60, 116, 180);
   border-color: rgb(60, 116, 180);
+}
+
+#profile-cancel-button {
+  margin-right: 30%;
+  float: right;
+  
+}
+
+#profile-save-button {
+  margin-left: 30%;
+  float: left;
+}
+
+#profile-save-button, #profile-cancel-button {
+  margin-top: 2%;
+}
+
+.edit-label {
+  width: 90%;
+  margin-right: 5%;
+  margin-left: 5%;
+  margin-bottom: 1%;
+  text-align: left;
+}
+
+.edit-input {
+  width: 90%;
+  margin-right: 5%;
+  margin-left: 5%;
+  margin-bottom: 5%;
 }
