@@ -42,6 +42,71 @@ body > div {
   border-style: solid;
   border-color: rgba(60, 116, 180, 0.5);
   border-width: 1px;
+  color: rgb(78, 81, 84);
+}
+
+#user-profile{
+  width: 590px;
+  height: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: right;
+  margin-top: 8%;
+
+  padding: 20px;
+  border-radius: 15px;
+  background-color: #f0f6fc;
+  border-style: solid;
+  border-color: rgba(60, 116, 180, 0.5);
+  border-width: 1px;
+  color: rgb(78, 81, 84);
+}
+
+#edit-user-profile {
+  width: 500px;
+  height: 315px;
+  margin-left: auto;
+  margin-right: auto;
+
+  padding: 20px;
+  border-radius: 15px;
+  margin-top: 5%;
+  text-align: center;
+  background-color: #f0f6fc;
+  border-style: solid;
+  border-color: rgba(60, 116, 180, 0.5);
+  border-width: 1px;
+  color: rgb(78, 81, 84);
+}
+
+#edit-user-form {
+  height: 40%;
+}
+
+.edit-input {
+  width: 90%;
+  margin-left: 10%;
+}
+
+.profile-picture {
+  float: left;
+  height: 190px;
+  width: 190px;
+  background-color: rgb(21, 52, 90);
+  border-radius: 50%;
+  margin-left: 5%;
+  text-align: center;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  background-image: url("tomo-trans-logo.png");
+}
+
+#profile-text-container {
+  width: 55%;
+  float: right;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-right: 5%;
 }
 
 #write-label {
@@ -71,7 +136,37 @@ body > div {
   margin-bottom: 30px;
 }
 
-#write-button {
+#write-button, #edit-profile-button, #profile-save-button, #profile-cancel-button {
   background-color: rgb(60, 116, 180);
   border-color: rgb(60, 116, 180);
+}
+
+#profile-cancel-button {
+  margin-right: 30%;
+  float: right;
+  
+}
+
+#profile-save-button {
+  margin-left: 30%;
+  float: left;
+}
+
+#profile-save-button, #profile-cancel-button {
+  margin-top: 2%;
+}
+
+.edit-label {
+  width: 90%;
+  margin-right: 5%;
+  margin-left: 5%;
+  margin-bottom: 1%;
+  text-align: left;
+}
+
+.edit-input {
+  width: 90%;
+  margin-right: 5%;
+  margin-left: 5%;
+  margin-bottom: 5%;
 }
