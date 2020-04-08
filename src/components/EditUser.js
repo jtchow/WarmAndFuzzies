@@ -1,4 +1,5 @@
 import React from 'react';
+import "./EditUser.css";
 
 export default class EditUserView extends React.Component 
 {

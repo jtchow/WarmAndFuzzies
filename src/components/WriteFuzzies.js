@@ -1,6 +1,7 @@
 import React from 'react';
 import {Typeahead} from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import "./WriteFuzzies.css";
 
 /*
 todo: need to figure out how to pass props using router

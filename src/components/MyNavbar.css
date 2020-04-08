@@ -1,0 +1,23 @@
+
+.navbar-custom { 
+    background-color: #f0f6fc;
+    height: 50px;
+    }
+      
+  .navbar-custom .navbar-brand { 
+    color: rgb(77, 77, 77);
+    padding-left: 1%;
+    padding-top: 10px;
+    font-weight: 450;
+  }
+  
+  .navbar-custom .navbar-collapse {
+    float: right;
+    padding-right: 1%;
+    padding-top: 5px;
+  }
+  
+  #profile-link {
+    color: rgb(123, 126, 129);
+  }
+  
