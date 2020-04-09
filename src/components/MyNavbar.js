@@ -15,9 +15,9 @@ export default class MyNav extends React.Component
                         <li className = "navbar-item">
                             <Link to="/write" className = "nav-link">Write Note</Link>
                         </li>
-                        {/* <li className = "navbar-item">
-                            <Link to="/write" className = "nav-link">Write Note</Link>
-                        </li> */}
+                        <li className = "navbar-item">
+                            <Link to="/bag/view" className = "nav-link">View My Bag</Link>
+                        </li>
                     </ul>
                     <ul className="navbar-nav navbar-right">
                         <li className="navbar-item">
