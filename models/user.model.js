@@ -37,6 +37,19 @@ const userSchema = new Schema(
     }
 );
 
+// User method to check if a user with the same email already exists in database
+
+userSchema.methods.checkIfEmailExists = function(signupEmail) {
+    if (User.findOne({email: signupEmail})) {
+        return true
+    }
+
+    else {
+        return false
+    }
+    
+};
+
 // User method to hash password input
 userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);

@@ -19,11 +19,20 @@ router.post('/signup', function(req,res) {
         password
     });
 
-    newUser.password = newUser.generateHash(newUser.password);
+    if (newUser.checkIfEmailExists(newUser.email)) {
+        return res.send({
+            success: false,
+            message: 'User account already created with this email'
+        });
+    }
 
-    newUser.save()
-    .then(() => res.json('User successfully added!'))
-    .catch(err => res.status(400).json('Error: ' + err))
+    else {
+        newUser.password = newUser.generateHash(newUser.password);
+        newUser.save()
+        .then(() => res.send('User successfully added!'))
+        .catch(err => res.status(400).json('Error: ' + err))
+        }
+   
 });
 
 // Route for Login Form
