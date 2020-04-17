@@ -20,7 +20,7 @@ router.post('/signup', function(req,res) {
     const password = req.body.password;
 
     checkIfEmailExists(email).then(function(exists) {
-        if (exists) {
+        if (!exists) {
             const newUser = new User({
                 firstName,
                 lastName,
