@@ -24,8 +24,14 @@ router.post('/signup', function(req,res) {
     const email = req.body.email;
     const password = req.body.password;
 
-    checkIfEmailExists(email).then(function(exists) {
-        if (!exists) {
+    checkIfEmailExists(email).then(function(emailExists) {
+        if (emailExists) {
+            return res.send({
+                success: false,
+                message: 'User account already created with this email'
+            });
+        }
+        else {
             const newUser = new User({
                 firstName,
                 lastName,
@@ -37,14 +43,7 @@ router.post('/signup', function(req,res) {
             newUser.save()
             .then(() => res.send('User successfully added!'))
             .catch(err => res.status(400).json('Error: ' + err))
-        } 
-        
-        else {
-            return res.send({
-                success: false,
-                message: 'User account already created with this email'
-            });
-        }
+        }   
     });
 });
 
