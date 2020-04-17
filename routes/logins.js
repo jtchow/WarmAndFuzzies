@@ -1,11 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+
 // Bring in the User Model
 let User = require('../models/user.model');
 
 
-// 
+// TODO: maybe move this somewhere else? 
 function checkIfEmailExists(signupEmail){
     return User.findOne({email: signupEmail}).then(function(result){
         if (result === null){
@@ -47,10 +48,6 @@ router.post('/signup', function(req,res) {
     });
 });
 
-// Route for Login Form
-router.get('/login', function(req,res) {
-    res.send('logging in')
-});
 
 // Route for Login Process
 router.post('/login', function(req,res, next) {
@@ -85,6 +82,7 @@ router.post('/login', function(req,res, next) {
         res.json('Valid Password, logging in')
     });
 });
+
 
 // Implement User session for logging out?
 router.delete('/logout', function(req,res) {
