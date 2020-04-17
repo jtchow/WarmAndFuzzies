@@ -5,34 +5,42 @@ const router = express.Router();
 let User = require('../models/user.model');
 
 
+// 
+function checkIfEmailExists(signupEmail){
+    return User.findOne({email: signupEmail}).then(function(result){
+        return result !== null;
+    });
+}
+
+
 router.post('/signup', function(req,res) {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
     const password = req.body.password;
 
-    // Save new user into database with hashed password
-    const newUser = new User({
-        firstName,
-        lastName,
-        email,
-        password
-    });
+    checkIfEmailExists(email).then(function(exists) {
+        if (exists) {
+            const newUser = new User({
+                firstName,
+                lastName,
+                email,
+                password
+            });
 
-    if (newUser.checkIfEmailExists(newUser.email)) {
-        return res.send({
-            success: false,
-            message: 'User account already created with this email'
-        });
-    }
-
-    else {
-        newUser.password = newUser.generateHash(newUser.password);
-        newUser.save()
-        .then(() => res.send('User successfully added!'))
-        .catch(err => res.status(400).json('Error: ' + err))
+            newUser.password = newUser.generateHash(newUser.password);
+            newUser.save()
+            .then(() => res.send('User successfully added!'))
+            .catch(err => res.status(400).json('Error: ' + err))
+        } 
+        
+        else {
+            return res.send({
+                success: false,
+                message: 'User account already created with this email'
+            });
         }
-   
+    });
 });
 
 // Route for Login Form

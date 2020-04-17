@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -36,19 +35,6 @@ const userSchema = new Schema(
         timestamps: true
     }
 );
-
-// User method to check if a user with the same email already exists in database
-
-userSchema.methods.checkIfEmailExists = function(signupEmail) {
-    if (User.findOne({email: signupEmail})) {
-        return true
-    }
-
-    else {
-        return false
-    }
-    
-};
 
 // User method to hash password input
 userSchema.methods.generateHash = function(password) {
