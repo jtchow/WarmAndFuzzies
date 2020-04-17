@@ -8,7 +8,12 @@ let User = require('../models/user.model');
 // 
 function checkIfEmailExists(signupEmail){
     return User.findOne({email: signupEmail}).then(function(result){
-        return result !== null;
+        if (result === null){
+            return false;
+        }
+        else {
+            return true;
+        }
     });
 }
 
