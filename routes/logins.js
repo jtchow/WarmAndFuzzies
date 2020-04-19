@@ -54,23 +54,23 @@ router.post('/login', function(req,res, next) {
     const email = req.body.email;
     const password = req.body.password;
 
-    User.find({
+    User.findOne({
         email: email
-    }, (err, users) => {
+    }, (err, user) => {
         if (err) {
             return res.send({
                 success: false,
                 message: 'Error: server error'
             });
         }
-        if (users.length !=1) {
+        
+        if (user === null) {
             return res.send({
                 success: false,
-                message: 'Error: Invalid'
+                message: 'Error: No user exists with that email'
             });
         }
 
-        const user = users[0];
         if (!user.validPassword(password)) {
             return res.send({
                 success: false,
