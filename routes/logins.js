@@ -19,6 +19,16 @@ function checkIfEmailExists(signupEmail){
 }
 
 
+router.post('/', function(req,res) {
+    if (req.session.key) {
+        res.redirect('/notes/send'); //TODO render this page
+    }
+
+    else {
+        res.redirect('/login');     // TODO render login page 
+    }
+});
+
 router.post('/signup', function(req,res) {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -91,7 +101,7 @@ router.get('/logout', function(req,res) {
         if(err){
             console.log(err);
         } else {
-            res.redirect('/login');
+            res.redirect('/');     
         }
     });
 });
