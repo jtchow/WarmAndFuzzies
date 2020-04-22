@@ -79,14 +79,21 @@ router.post('/login', function(req,res, next) {
         }
 
         // TODO redirect to User specific page. (needs user page to be implemented first)
+        req.session.key = email;
         res.json('Valid Password, logging in')
     });
 });
 
 
 // Implement User session for logging out?
-router.delete('/logout', function(req,res) {
-    res.send('logging out')
+router.get('/logout', function(req,res) {
+    if(req.session.key) {
+        req.session.destroy(function(){
+        res.redirect('/');
+    });
+    } else {
+        res.redirect('/');
+    }
 });
 
 
