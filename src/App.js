@@ -9,6 +9,7 @@ import UserView from './components/User';
 import EditUserView from './components/EditUser';
 import Home from './components/Home';
 import Bag from './components/Bag.js';
+import Signup from './components/Signup.js';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <MyNav />
         <br/>
         <Route path="/" exact component={Home}/>
+        <Route path="/signup" exact component={Signup}/>
         <Route path="/bag/:id" exact component = {Bag}></Route>
         <Route path= "/write" exact component = {WriteFuzzies}/>
         {/* Change the write fuzzies component when writing period is done to viewing component */}
