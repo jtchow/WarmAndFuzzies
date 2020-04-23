@@ -1,0 +1,45 @@
+#login-button {
+    background-color: rgb(60, 116, 180);
+    border-color: rgb(60, 116, 180);
+}
+
+#login {
+    width: 500px;
+    height: 355px;
+    margin-left: auto;
+    margin-right: auto;
+
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 5%;
+    text-align: center;
+    background-color: #f0f6fc;
+    border-style: solid;
+    border-color: rgba(60, 116, 180, 0.5);
+    border-width: 1px;
+    color: rgb(78, 81, 84);
+}
+
+.login-label {
+    width: 90%;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-bottom: 1%;
+    text-align: left;
+}
+  
+.login-input {
+    width: 90%;
+    margin-right: 5%;
+    margin-left: 5%;
+    margin-bottom: 5%;
+}
+
+.forgot-password {
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+#forgot {
+    color: rgb(78, 81, 84);
+}

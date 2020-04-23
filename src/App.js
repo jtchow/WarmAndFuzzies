@@ -10,6 +10,7 @@ import EditUserView from './components/EditUser';
 import Home from './components/Home';
 import Bag from './components/Bag.js';
 import Signup from './components/Signup.js';
+import Login from './components/Login.js';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <br/>
         <Route path="/" exact component={Home}/>
         <Route path="/signup" exact component={Signup}/>
+        <Route path="/login" exact component={Login}/>
         <Route path="/bag/:id" exact component = {Bag}></Route>
         <Route path= "/write" exact component = {WriteFuzzies}/>
         {/* Change the write fuzzies component when writing period is done to viewing component */}
