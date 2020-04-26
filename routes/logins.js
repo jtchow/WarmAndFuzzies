@@ -19,6 +19,16 @@ function checkIfEmailExists(signupEmail){
 }
 
 
+router.post('/', function(req,res) {
+    if (req.session.key) {
+        res.redirect('/notes/send'); //TODO render this page
+    }
+
+    else {
+        res.redirect('/login');     // TODO render login page 
+    }
+});
+
 router.post('/signup', function(req,res) {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -79,14 +89,21 @@ router.post('/login', function(req,res, next) {
         }
 
         // TODO redirect to User specific page. (needs user page to be implemented first)
+        req.session.key = email;
         res.json('Valid Password, logging in')
     });
 });
 
 
 // Implement User session for logging out?
-router.delete('/logout', function(req,res) {
-    res.send('logging out')
+router.get('/logout', function(req,res) {
+    req.session.destroy(function(err){
+        if(err){
+            console.log(err);
+        } else {
+            res.redirect('/');     
+        }
+    });
 });
 
 
