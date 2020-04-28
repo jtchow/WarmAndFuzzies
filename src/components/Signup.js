@@ -1,5 +1,6 @@
 import React from 'react';
 import "./Signup.css";
+import axios from 'axios';
 
 export default class Signup extends React.Component
 {
@@ -54,9 +55,18 @@ export default class Signup extends React.Component
         // do some validation here
 
         console.log(this.state);
-        //if successful, reroute to write fuzzies page
 
-        this.props.history.push('/write');
+        // create User Object with information from form/state
+        const newUser = {
+            firstName: this.state.first,
+            lastName: this.state.last,
+            email: this.state.email,
+            password: this.state.password
+        }
+
+        // store in database (will prob have to change localhost to something else)
+        axios.post('http://localhost:5000/signup', newUser);
+
     }
 
     render()

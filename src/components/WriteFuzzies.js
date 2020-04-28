@@ -2,6 +2,7 @@ import React from 'react';
 import {Typeahead} from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import "./WriteFuzzies.css";
+import axios from 'axios';
 
 /*
 todo: need to figure out how to pass props using router
@@ -14,8 +15,10 @@ export default class WriteFuzzies extends React.Component
     {
         super(props);
         this.state = {
-            sender: props.userid,
+            sender: props.userid, // get this from redis session instead?? 
+            recipients: [], // people we can write to, as tuples (userid, firstname, lastname)
             recipient: '',
+            writtenTo: [],
             message: '',
             filter: 'all',
             filterText: 'Filter'
@@ -26,6 +29,29 @@ export default class WriteFuzzies extends React.Component
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
+    componentDidMount(){
+        // axios.get('http://localhost:5000/notes/users')
+        //     .then(response => {
+        //         this.setState({
+        //             recipients: response.data.recipients;
+        //         })
+        //     })
+        //     .catch(function (error){
+        //         console.log(error);
+        //     })
+
+        // // call another method to get a list of all users we've written to already
+        
+        // axios.get("http://localhost:5000/notes/written/" + [USER ID])
+        //     .then(response => {
+        //         this.setState({
+        //             writtenTo: response.data.writtenTo
+        //         });
+        //     })
+
+    }
+
 
     handleRecipientChange(event)
     {
@@ -54,11 +80,7 @@ export default class WriteFuzzies extends React.Component
     {
         event.preventDefault();
 
-        const object = {
-            sender: this.state.sender,
-            recipient: this.state.recipient,
-            message: this.state.message
-        }
+    
 
         if(this.state.recipient === "")
         {
@@ -70,7 +92,16 @@ export default class WriteFuzzies extends React.Component
         }
         else
         {
-            console.log(object); //send to backend
+            const note = {
+                sender: this.state.sender,
+                recipient: this.state.recipient,
+                message: this.state.message
+            }
+
+            axios.post("https://localhost:5000/send", note)
+                .then(res => console.log(res.data));
+                // need to implement check if the post request was successful
+
             //check if successful--if successful clear form else dont and let them try again
             this.setState({
                 recipient: '',
@@ -85,32 +116,36 @@ export default class WriteFuzzies extends React.Component
     render()
     {
         //in future get this list from api call
-        const recipients = [
-            {name: "Angela", id: 1},
-            {name: "Annie", id: 2},
-            {name: "Brandon", id: 3},
-            {name: "Brian", id: 4},
-            {name: "Darren", id: 5},
-            {name: "Jason", id: 6},
-            {name: "Kasey", id: 7},
-            {name: "Kylie", id: 8},
-            {name: "Kyle", id: 9},
-            {name: "Richard", id: 10},
-            {name: "Sarah", id: 11},
-            {name: "Tyler Onishi", id: 12},
-            {name: "Tyler Yin", id: 13},
-        ];
+        // const recipients = [
+        //     {name: "Angela", id: 1},
+        //     {name: "Annie", id: 2},
+        //     {name: "Brandon", id: 3},
+        //     {name: "Brian", id: 4},
+        //     {name: "Darren", id: 5},
+        //     {name: "Jason", id: 6},
+        //     {name: "Kasey", id: 7},
+        //     {name: "Kylie", id: 8},
+        //     {name: "Kyle", id: 9},
+        //     {name: "Richard", id: 10},
+        //     {name: "Sarah", id: 11},
+        //     {name: "Tyler Onishi", id: 12},
+        //     {name: "Tyler Yin", id: 13},
+        // ];
 
-        const writtenTo = [1,3,4,5]; //list of ids of users who the user has written to--also get this from api
+        //const writtenTo = [1,3,4,5]; //list of ids of users who the user has written to--also get this from api
+
+        // IMPORTANT:
+        // will have to convert the user ids to names when we display them in the filter
+        // BUT we still want to save the recipient as an ID to make access easier
 
         // user list filter functions
         const noFilter = (recipient) => (true);
-        const filterWritten = (recipient) => (writtenTo.includes(recipient.id));
-        const filterNotWritten = (recipient) => (!writtenTo.includes(recipient.id));
+        const filterWritten = (recipient) => (state.writtenTo.includes(recipient.id));
+        const filterNotWritten = (recipient) => (!state.writtenTo.includes(recipient.id));
 
         // filter options here
         const filterFunc = this.state.filter === "all" ? noFilter : this.state.filter === "written" ? filterWritten : filterNotWritten;
-        const recipientNames = recipients.filter(filterFunc).map((recipient) => recipient.name);
+        const recipientNames = this.state.recipients.filter(filterFunc).map((recipient) => recipient.name); // this will break rn bc no .name value
         //name list needs to be passed from props or use api call somewhere
 
 

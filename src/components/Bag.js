@@ -37,7 +37,7 @@ export default class Bag extends Component{
         var notes = this.state.notes;
         return(
             <div className = "container" style = {{background: "white"}}>
-                <h1>{this.state.user}'s Bag</h1>
+                <h1>{this.state.firstName}'s Bag</h1>
                 {
                     notes.map(note =>
                     {

@@ -1,5 +1,6 @@
 import React from 'react';
 import "./EditUser.css";
+import axios from 'axios';
 
 export default class EditUserView extends React.Component 
 {
@@ -36,6 +37,15 @@ export default class EditUserView extends React.Component
         event.preventDefault();
 
         console.log(this.state);
+
+        const updatedUserInfo = {
+            first: this.state.first,
+            last: this.state.last
+        }
+
+        // axios.post("https://localhost5000/update/" + [USER ID HERE], updatedUserInfo)
+        //     .then(res => console.log(res.data));
+
         //if successful, reroute to user profile page
 
         this.props.history.push('/user-profile');

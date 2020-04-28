@@ -21,7 +21,13 @@ export default class MyNav extends React.Component
                     </ul>
                     <ul className="navbar-nav navbar-right">
                         <li className="navbar-item">
+                            <Link to="/signup" className="nav-link" id="profile-link">Sign Up</Link>
+                        </li>
+                        <li className="navbar-item">
                             <Link to="/user-profile" className="nav-link" id="profile-link">My Profile</Link>
+                        </li>
+                        <li className="navbar-item">
+                            <Link to="/login" className="nav-link" id="profile-link">Log In</Link>
                         </li>
                     </ul>
                 </div>

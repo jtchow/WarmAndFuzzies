@@ -20,13 +20,14 @@ function checkIfEmailExists(signupEmail){
 
 
 router.post('/', function(req,res) {
-    if (req.session.key) {
-        res.redirect('/notes/send'); //TODO render this page
-    }
+    // if (req.session.key) {
+    //     res.redirect('/notes/send'); //TODO render this page
+    // }
 
-    else {
-        res.redirect('/login');     // TODO render login page 
-    }
+    // else {
+    //     res.redirect('/login');     // TODO render login page 
+    // }
+    res.redirect('/login');
 });
 
 router.post('/signup', function(req,res) {
@@ -54,6 +55,9 @@ router.post('/signup', function(req,res) {
             newUser.save()
             .then(() => res.send('User successfully added!'))
             .catch(err => res.status(400).json('Error: ' + err))
+
+            // redirect to warm and fuzzies page
+            res.redirect("/write");
         }   
     });
 });
@@ -89,22 +93,35 @@ router.post('/login', function(req,res, next) {
         }
 
         // TODO redirect to User specific page. (needs user page to be implemented first)
-        req.session.key = email;
-        res.json('Valid Password, logging in')
+       // Kasey: Change session key to id? To make calls to access data easier bc we have id readily available
+        // req.session.key = email;
+        return res.send({
+            success: true, 
+            message: 'Valid Password, logging in'
+        });
+
     });
 });
 
 
 // Implement User session for logging out?
 router.get('/logout', function(req,res) {
-    req.session.destroy(function(err){
-        if(err){
-            console.log(err);
-        } else {
-            res.redirect('/');     
-        }
-    });
+    // req.session.destroy(function(err){
+    //     if(err){
+    //         console.log(err);
+    //     } else {
+    //         res.redirect('/');     
+    //     }
+    // });
 });
+
+// WHAT IT'S FOR: get user data for displaying on profile + updating too 
+// returns that user model/object
+// path name: /user/:id
+
+// WHAT IT'S FOR: updating user data
+// path name: /user/update/:id
+// is given first name and last name to update
 
 
 module.exports = router;

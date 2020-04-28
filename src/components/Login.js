@@ -1,5 +1,6 @@
 import React from 'react';
 import "./Login.css";
+import axios from 'axios';
 
 export default class Login extends React.Component
 {
@@ -35,9 +36,18 @@ export default class Login extends React.Component
         event.preventDefault();
 
         console.log(this.state);
-        //if successful, reroute to write fuzzies page
 
-        this.props.history.push('/write');
+        const login = {
+            email: this.state.email,
+            password: this.state.password
+        }
+
+        // check information with database
+        axios.post('http://localhost:5000/login', login)
+            .then(res => console.log(res.data)); // might want to display what is sent back as error message? 
+            // check if we get a success , if so => redirect to write page
+            // if success = false, then display error message and ask them to try loggin in again 
+    
     }
 
     render()
