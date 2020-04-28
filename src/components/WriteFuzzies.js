@@ -93,7 +93,7 @@ export default class WriteFuzzies extends React.Component
         else
         {
             const note = {
-                sender: this.state.sender,
+                sender: this.state.sender, // this will be the current user's id
                 recipient: this.state.recipient,
                 message: this.state.message
             }
@@ -140,8 +140,8 @@ export default class WriteFuzzies extends React.Component
 
         // user list filter functions
         const noFilter = (recipient) => (true);
-        const filterWritten = (recipient) => (state.writtenTo.includes(recipient.id));
-        const filterNotWritten = (recipient) => (!state.writtenTo.includes(recipient.id));
+        const filterWritten = (recipient) => (this.state.writtenTo.includes(recipient.id));
+        const filterNotWritten = (recipient) => (!this.state.writtenTo.includes(recipient.id));
 
         // filter options here
         const filterFunc = this.state.filter === "all" ? noFilter : this.state.filter === "written" ? filterWritten : filterNotWritten;
