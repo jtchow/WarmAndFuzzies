@@ -66,18 +66,17 @@ export default class Signup extends React.Component
 
         // store in database (will prob have to change localhost to something else)
         axios.post('http://localhost:5000/signup', newUser).then(function(response) {
-            alert();
+            if (response.status === 200) {
+                this.props.history.push('/write');
+            }
+
+            else {
+                window.alert('nah');
+            }
           })
           .catch(function(error) {
             console.log(error);
           });;
-        // axios({
-        //     method: 'post',
-        //     url: 'http://localhost:5000/signup',
-        //     data: newUser, 
-        //     // withCredentials: true
-        //   });
-
     }
 
     render()

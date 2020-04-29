@@ -53,11 +53,9 @@ router.post('/signup', function(req,res) {
 
             newUser.password = newUser.generateHash(newUser.password);
             newUser.save()
-            .then(() => res.send('User successfully added!'))
+            .then(() => res.status(200).send('User successfully added!'))
             .catch(err => res.status(400).json('Error: ' + err))
 
-            // redirect to warm and fuzzies page
-            res.redirect("/write");
         }   
     });
 });
