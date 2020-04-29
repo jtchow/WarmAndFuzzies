@@ -2,6 +2,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const cors = require('cors');
 
 const logins = require('./routes/logins');
 const notes = require('./routes/notes');
@@ -42,6 +43,8 @@ connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 });
 
+
+app.use(cors({origin: true, credentials: true}));
 
 
 // define routes
