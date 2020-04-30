@@ -38,10 +38,7 @@ router.post('/signup', function(req,res) {
 
     checkIfEmailExists(email).then(function(emailExists) {
         if (emailExists) {
-            return res.send({
-                success: false,
-                message: 'User account already created with this email'
-            });
+            res.status(400).send('User account already created with this email');
         }
         else {
             const newUser = new User({
@@ -54,7 +51,7 @@ router.post('/signup', function(req,res) {
             newUser.password = newUser.generateHash(newUser.password);
             newUser.save()
             .then(() => res.status(200).send('User successfully added!'))
-            .catch(err => res.status(400).json('Error: ' + err))
+            .catch(err => res.status(500).json('Error: ' + err))
 
         }   
     });
@@ -70,34 +67,20 @@ router.post('/login', function(req,res, next) {
         email: email
     }, (err, user) => {
         if (err) {
-            return res.send({
-                success: false,
-                message: 'Error: server error'
-            });
+            res.status(500).send('Error: server error');
         }
         
         if (user === null) {
-            return res.send({
-                success: false,
-                message: 'Error: No user exists with that email'
-            });
+            res.status(404).send('Error: no user exists with that email');
         }
 
         if (!user.validPassword(password)) {
-            return res.send({
-                success: false,
-                message: 'Error: Invalid Password'
-            });
+            res.status(404).send('Error: Invalid Password');
         }
 
-        // TODO redirect to User specific page. (needs user page to be implemented first)
        // Kasey: Change session key to id? To make calls to access data easier bc we have id readily available
         // req.session.key = email;
-        return res.send({
-            success: true, 
-            message: 'Valid Password, logging in'
-        });
-
+        res.status(200).send('Error: Invalid Password');
     });
 });
 
