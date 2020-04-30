@@ -28,6 +28,10 @@ const userSchema = new Schema(
             required: true,
             trim:true, 
             minlength: 7
+        }, 
+
+        writtenTo: {
+            type: Array
         }
     }, 
     

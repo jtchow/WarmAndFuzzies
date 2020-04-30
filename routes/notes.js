@@ -5,6 +5,7 @@ let Note = require('../models/note.model');
 
 // View notes endpoint 
 router.get('/view', function(req,res) {
+    // TODO handle multiple documents returned here? 
     const userEmail = req.session.email;
     Note.find({recipient: userEmail},(err,data)=>{
         if(err) {
@@ -18,7 +19,8 @@ router.get('/view', function(req,res) {
 
 // Send note endpoint
 router.post('/send', function(req,res) {
-    const sender = req.body.sender;
+    const sender = req.session.email;
+    // TODO recipient needs to be an email
     const recipient = req.body.recipient;
     const contents = req.body.contents;
 
