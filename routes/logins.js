@@ -20,14 +20,13 @@ function checkIfEmailExists(signupEmail){
 
 
 router.post('/', function(req,res) {
-    // if (req.session.key) {
-    //     res.redirect('/notes/send'); //TODO render this page
-    // }
+    if (req.session.email) {
+        res.status(200).send('Logged in, send to write page');
+    }
 
-    // else {
-    //     res.redirect('/login');     // TODO render login page 
-    // }
-    res.redirect('/login');
+    else {
+        res.status(400).send('Must login first');
+    }
 });
 
 router.post('/signup', function(req,res) {
@@ -63,24 +62,27 @@ router.post('/login', function(req,res, next) {
     const email = req.body.email;
     const password = req.body.password;
 
-    User.findOne({
-        email: email
-    }, (err, user) => {
+    User.findOne({email: email}, (err, user) => {
         if (err) {
             res.status(500).send('Error: server error');
         }
         
-        if (user === null) {
+        else if (user === null) {
             res.status(404).send('Error: no user exists with that email');
         }
 
-        if (!user.validPassword(password)) {
+        else if (!user.validPassword(password)) {
             res.status(404).send('Error: Invalid Password');
         }
 
-       // Kasey: Change session key to id? To make calls to access data easier bc we have id readily available
-        // req.session.key = email;
-        res.status(200).send('Error: Invalid Password');
+        // Kasey: Change session key to id? To make calls to access data easier bc we have id readily available
+        else {
+            req.session.email = user.email;
+            req.session.firstName = user.firstName;
+            req.session.lastName = user.lastName;
+            res.status(200).send('Successfully logged in');
+        } 
+
     });
 });
 
