@@ -5,14 +5,14 @@ let Note = require('../models/note.model');
 
 // View notes endpoint 
 router.get('/view', function(req,res) {
-    const selectedUser = req.body.user;
-
-    // search notes collection for the selected user and return data
-    // TODO search based on session email or something similar
-    Note.find({recipient: selectedUser},(err,data)=>{
-        if(err) res.send(err)
-          res.status(200).send(data)
-          });  
+    const userEmail = req.session.email;
+    Note.find({recipient: userEmail},(err,data)=>{
+        if(err) {
+            res.status(404).send(err);
+        }
+        else {
+            res.status(200).send(data);
+        }
 });
 
 
