@@ -45,16 +45,23 @@ router.post('/send', function(req,res) {
     );
 });
 
+// RETURN ALL USERS ROUTE
 // WHAT IT DOES: get list of all users
 // route path: /users
 // returns array of all user ids in the database
 // IF POSSIBLE, can we return an array of tuples (user_id, firstname, lastname)
 // that way we can easily display all info it on the write Notes page
+// LOGIC: query db for all users and return
 
+
+// RETURN WRITTEN TO USERS ROUTE
 // WHAT IT DOES: get all users that a specific user has written notes to
 // route path: /written/:id
 // use req.params.id to get the id off that path
 // returns an array of user ids who we've sent notes to
+// LOGIC: query db for email: req.session.email then return writtenTo array of emails
 
 
+// RETURN NOT WRITTEN TO USERS ROUTE
+// logic: find users where email not like logged in user's writtenTo array
 module.exports = router;
