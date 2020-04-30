@@ -75,27 +75,24 @@ router.post('/login', function(req,res, next) {
             res.status(404).send('Error: Invalid Password');
         }
 
-        // Kasey: Change session key to id? To make calls to access data easier bc we have id readily available
         else {
             req.session.email = user.email;
             req.session.firstName = user.firstName;
             req.session.lastName = user.lastName;
             res.status(200).send('Successfully logged in');
         } 
-
     });
 });
 
 
-// Implement User session for logging out?
 router.get('/logout', function(req,res) {
-    // req.session.destroy(function(err){
-    //     if(err){
-    //         console.log(err);
-    //     } else {
-    //         res.redirect('/');     
-    //     }
-    // });
+    req.session.destroy(function(err){
+        if(err){
+            res.status(500).send('Error: could not log out');
+        } else {
+            res.status(200).send('Logged out');     
+        }
+    });
 });
 
 // WHAT IT'S FOR: get user data for displaying on profile + updating too 
