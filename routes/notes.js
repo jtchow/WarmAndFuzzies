@@ -11,7 +11,7 @@ router.get('/view', function(req,res) {
     // TODO search based on session email or something similar
     Note.find({recipient: selectedUser},(err,data)=>{
         if(err) res.send(err)
-          res.send(data)
+          res.status(200).send(data)
           });  
 });
 
@@ -33,8 +33,8 @@ router.post('/send', function(req,res) {
 
     // save note to DB and send response or error message
     newNote.save()
-    .then(() => res.send('Sent warm and fuzzy!'))
-    .catch(err => res.status(400).json('Error: ' + err));
+    .then(() => res.status(200).send('Sent warm and fuzzy!'))
+    .catch(err => res.status(500).json('Error: ' + err));
 });
 
 // WHAT IT DOES: get list of all users
