@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 let Note = require('../models/note.model');
+let User = require('../models/user.model');
 
 
 // View notes endpoint 
@@ -24,8 +25,6 @@ router.post('/send', function(req,res) {
     const recipient = req.body.recipient;
     const contents = req.body.contents;
 
-    // ALSO UPDATE THE WRITTENTO ARRAY IN THE SENDER'S USER INFO??? 
-
     // create new Note object for DB insertion
     const newNote = new Note({
         sender,
@@ -37,6 +36,12 @@ router.post('/send', function(req,res) {
     newNote.save()
     .then(() => res.status(200).send('Sent warm and fuzzy!'))
     .catch(err => res.status(500).json('Error: ' + err));
+
+    // update user writtenTo array in DB
+    User.update(
+        { email: sender },
+        { $push: { writtenTo: recipient } }
+    );
 });
 
 // WHAT IT DOES: get list of all users
