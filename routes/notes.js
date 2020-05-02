@@ -46,7 +46,7 @@ router.post('/send', function(req,res) {
 });
 
 
-router.get('/all-users', function(req,res) {
+router.get('/users-all', function(req,res) {
     User.find({firstName: true, lastName: true, email: true},(err, users)=>{
         if (err) {
             res.status(404).send("Error: Could not retrieve user list");
@@ -55,7 +55,21 @@ router.get('/all-users', function(req,res) {
         else {
             res.status(200).send(users);
         }
-}
+    });
+});
+
+
+router.get('/users-written-to', function(req,res) {
+    User.find({firstName: true, lastName: true, email: true},(err, users)=>{
+        if (err) {
+            res.status(404).send("Error: Could not retrieve user list");
+        }
+
+        else {
+            res.status(200).send(users);
+        }
+    });
+});
 
 
 // RETURN WRITTEN TO USERS ROUTE
