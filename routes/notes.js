@@ -46,6 +46,7 @@ router.post('/send', function(req,res) {
 });
 
 
+// Get list of all users. Return value: cursor with user first name, last name, and email
 router.get('/users-all', function(req,res) {
     User.find({firstName: true, lastName: true, email: true},(err, users)=>{
         if (err) {
@@ -59,25 +60,19 @@ router.get('/users-all', function(req,res) {
 });
 
 
+// Get list of all users written to. Return value: cursor with list of emails
 router.get('/users-written-to', function(req,res) {
-    User.find({firstName: true, lastName: true, email: true},(err, users)=>{
+    currentUserEmail = req.session.email;
+    User.find({email: currentUserEmail}, {writtenTo: true},(err, usersWrittenTo)=>{
         if (err) {
-            res.status(404).send("Error: Could not retrieve user list");
+            res.status(404).send("Error: Could not retrieve written to user list");
         }
 
         else {
-            res.status(200).send(users);
+            res.status(200).send(usersWrittenTo);
         }
     });
 });
-
-
-// RETURN WRITTEN TO USERS ROUTE
-// WHAT IT DOES: get all users that a specific user has written notes to
-// route path: /written/:id
-// use req.params.id to get the id off that path
-// returns an array of user ids who we've sent notes to
-// LOGIC: query db for email: req.session.email then return writtenTo array of emails
 
 
 // RETURN NOT WRITTEN TO USERS ROUTE
