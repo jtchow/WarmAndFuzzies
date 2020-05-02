@@ -45,13 +45,17 @@ router.post('/send', function(req,res) {
     );
 });
 
-// RETURN ALL USERS ROUTE
-// WHAT IT DOES: get list of all users
-// route path: /users
-// returns array of all user ids in the database
-// IF POSSIBLE, can we return an array of tuples (user_id, firstname, lastname)
-// that way we can easily display all info it on the write Notes page
-// LOGIC: query db for all users and return
+
+router.get('/all-users', function(req,res) {
+    User.find({firstName: true, lastName: true, email: true},(err, users)=>{
+        if (err) {
+            res.status(404).send("Error: Could not retrieve user list");
+        }
+
+        else {
+            res.status(200).send(users);
+        }
+}
 
 
 // RETURN WRITTEN TO USERS ROUTE
