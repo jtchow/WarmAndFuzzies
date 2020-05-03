@@ -48,7 +48,7 @@ router.post('/send', function(req,res) {
 
 // Get list of all users. Return value: cursor with user first name, last name, and email
 router.get('/users-all', function(req,res) {
-    User.find({}, {firstName: true, lastName: true, email: true},(err, users)=>{
+    User.find({}, {firstName: 1, lastName: 1, email: 1},(err, users)=>{
         if (err) {
             res.status(404).send("Error: Could not retrieve user list");
         }
