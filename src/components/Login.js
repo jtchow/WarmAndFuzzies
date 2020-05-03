@@ -1,6 +1,7 @@
 import React from 'react';
 import "./Login.css";
 import axios from 'axios';
+import session from 'express-session';
 
 export default class Login extends React.Component
 {
@@ -39,7 +40,9 @@ export default class Login extends React.Component
 
         const login = {
             email: this.state.email,
-            password: this.state.password
+            password: this.state.password,
+            //session: session // not sure if this is the right way to handle
+
         }
 
         // check information with database
@@ -47,7 +50,6 @@ export default class Login extends React.Component
             .then(res => console.log(res.data)); // might want to display what is sent back as error message? 
             // check if we get a success , if so => redirect to write page
             // if success = false, then display error message and ask them to try loggin in again 
-    
     }
 
     render()
