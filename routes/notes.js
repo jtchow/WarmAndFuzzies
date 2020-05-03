@@ -8,7 +8,7 @@ let User = require('../models/user.model');
 router.get('/view', function(req,res) {
     // TODO handle multiple documents returned here? 
     const userEmail = req.session.email;
-    Note.find({recipient: userEmail},(err,notes)=>{
+    Note.find({recipient: userEmail},(err, notes)=>{
         if(err) {
             res.status(404).send(err);
         }

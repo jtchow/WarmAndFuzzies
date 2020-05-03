@@ -20,6 +20,8 @@ export default class Bag extends Component{
 
     // NEED A LOGGED IN USER OR VALUE TO MAKE THIS REQUEST! 
 
+    // need to pass in session!
+
     // componentWillMount(){
     //     axios.get('http://localhost:5000/view')
     //     .then(response =>{

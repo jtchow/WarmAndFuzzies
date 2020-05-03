@@ -16,7 +16,7 @@ export default class UserView extends React.Component
     // create thisWillMount method to set up the state using information from database
     // will get user data using id from session and get username, Name for the component to display
     componentDidMount(){
-        // axios.get('https://localhost:5000/user/' + userID))
+        // axios.get('https://localhost:5000/user/info', session?))
         //     .then(response => {
         //         this.setState({
         //             username: response.data.username,

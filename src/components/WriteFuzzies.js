@@ -31,19 +31,20 @@ export default class WriteFuzzies extends React.Component
     }
 
     componentDidMount(){
-        // axios.get('http://localhost:5000/notes/users')
-        //     .then(response => {
-        //         this.setState({
-        //             recipients: response.data.recipients;
-        //         })
-        //     })
-        //     .catch(function (error){
-        //         console.log(error);
-        //     })
+        axios.get('http://localhost:5000/notes/users-all')
+            .then(response => {
+                this.setState({
+                    recipients: response.data
+                })
+                console.log(response.data);
+            })
+            .catch(function (error){
+                console.log(error);
+            })
 
-        // // call another method to get a list of all users we've written to already
+        // call another method to get a list of all users we've written to already
         
-        // axios.get("http://localhost:5000/notes/written/" + [USER ID])
+        // axios.get("http://localhost:5000/notes/users-written-to", session)
         //     .then(response => {
         //         this.setState({
         //             writtenTo: response.data.writtenTo
@@ -93,7 +94,7 @@ export default class WriteFuzzies extends React.Component
         else
         {
             const note = {
-                sender: this.state.sender, // this will be the current user's id
+                sender: this.state.sender, // this will be the current user's session id
                 recipient: this.state.recipient,
                 message: this.state.message
             }
@@ -140,8 +141,8 @@ export default class WriteFuzzies extends React.Component
 
         // user list filter functions
         const noFilter = (recipient) => (true);
-        const filterWritten = (recipient) => (this.state.writtenTo.includes(recipient.id));
-        const filterNotWritten = (recipient) => (!this.state.writtenTo.includes(recipient.id));
+        const filterWritten = (recipient) => (this.state.writtenTo.includes(recipient.email));
+        const filterNotWritten = (recipient) => (!this.state.writtenTo.includes(recipient.email));
 
         // filter options here
         const filterFunc = this.state.filter === "all" ? noFilter : this.state.filter === "written" ? filterWritten : filterNotWritten;

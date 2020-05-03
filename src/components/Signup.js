@@ -69,8 +69,8 @@ export default class Signup extends React.Component
             if (response.status === 200) {
                 this.props.history.push('/write');
             }
-
             else {
+                console.log("failed");
                 window.alert('nah');
             }
           })
