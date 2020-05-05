@@ -4,7 +4,7 @@ import "./MyNavbar.css";
 
 
 const MyNav = () => {
-    const authEmail = "test"; // this should be set to the session email if there is one
+    const authEmail = "Hi"; // this should be set to the session email if there is one
 
     var profileLink = ( <li className="navbar-item">
                         <Link to="/user-profile" className="nav-link" id="profile-link">My Profile</Link>
@@ -38,10 +38,11 @@ const MyNav = () => {
                    {authEmail && viewLink}
                 </ul>
                 <ul className="navbar-nav navbar-right">
-                   {authEmail && profileLink}
+                    {authEmail && profileLink}
                    {authEmail && logoutLink}
-                   {!authEmail &&  signUpLink}
-                   {!authEmail && loginLink}
+                   
+                   {authEmail && signUpLink}
+                   {authEmail &&loginLink}
                 </ul>
             </div>
         </nav>
