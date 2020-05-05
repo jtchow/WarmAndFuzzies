@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 export default class UserView extends React.Component
 {
@@ -16,19 +17,19 @@ export default class UserView extends React.Component
     // create thisWillMount method to set up the state using information from database
     // will get user data using id from session and get username, Name for the component to display
     componentDidMount(){
-        // axios.get('https://localhost:5000/user/info', session?))
-        //     .then(response => {
-        //         this.setState({
-        //             username: response.data.username,
-        //             first: response.data.first,
-        //             last: response.data.last
-        //         })
-        //     })
-        //     .catch(function (error){
-        //         console.log(error);
-        //     })
+        axios.get('https://localhost:5000/user')
+            .then(response => {
+                // this.setState({
+                //     username: response.data.username,
+                //     first: response.data.firstName,
+                //     last: response.data.lastName
+                // })
+                console.log(response.data);
+            })
+            .catch(function (error){
+                console.log(error);
+            })
     }
-
 
     render()
     {

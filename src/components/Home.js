@@ -1,7 +1,9 @@
 import React from 'react';
+import Axios from 'axios';
 
 
 const Home = function(){
+ 
     return(
             <div className = "container">
                 <div className="jumbotron">

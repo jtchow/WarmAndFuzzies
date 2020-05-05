@@ -54,6 +54,8 @@ router.get('/users-all', function(req,res) {
         }
 
         else {
+            console.log("sending users");
+            console.log(users);
             res.status(200).send(users);
         }
     });

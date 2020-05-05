@@ -1,17 +1,24 @@
 // define requirements
 const express = require('express');
 const mongoose = require('mongoose');
-const session = require('express-session');
 const cors = require('cors');
 
 const logins = require('./routes/logins');
 const notes = require('./routes/notes');
 require('dotenv').config();
+var cookieParser = require('cookie-parser');
+const session = require('express-session');
+
 
 
 // setup express
 const app = express();
 app.use(express.json());
+
+// set up express-session
+app.use(cookieParser());
+app.use(session({secret: "It's a secret"}));
+
 const port = process.env.PORT || 5000;
 
 // REDIS STUFF (COMMENTED OUT FOR NOW)
