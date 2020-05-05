@@ -11,9 +11,9 @@ export default class Bag extends Component{
         super(props);
 
         this.state = {
-            firstName: this.props.match.params.firstName, // need to pass this from somewhere?
-            lastName: this.props.match.params.lastName,
-            userID: this.props.match.params.id,
+            firstName: this.props.cookies.get('user'), // need to pass this from somewhere?
+            lastName: "",
+            userID: "",
             notes: [] // get request will fill this array with notes
         }
     }

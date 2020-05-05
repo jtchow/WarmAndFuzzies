@@ -15,7 +15,7 @@ export default class WriteFuzzies extends React.Component
     {
         super(props);
         this.state = {
-            sender: props.userid, // get this from redis session instead?? 
+            sender: this.props.cookies.get('user'), // get this from redis session instead?? 
             recipients: [], // people we can write to, as tuples (userid, firstname, lastname)
             recipient: '',
             writtenTo: [],

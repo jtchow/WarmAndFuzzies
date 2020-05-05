@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import "./MyNavbar.css";
 import {useCookies} from 'react-cookie';
 
-const MyNav = () => {
+const MyNav = (props) => {
     const [cookies, setCookie, removeCookie] = useCookies(['user']);
     //const {cookies} = props.cookies; // this should be set to the session email if there is one
     //setCookie('user', 'Tester', {path: '/'});
@@ -21,8 +21,10 @@ const MyNav = () => {
                         <Link to="/login" className="nav-link" id="profile-link">Log In</Link>
                     </li>);
 
+    //onClick = {() => removeCookie('user', {path: '/'}), props.history.push('/') }
+
     var logoutLink = (<li className = "navbar-item">
-        <Link to = "/logout" className = "nav-link" id = "profile-link">Logout</Link>
+        <Link to = "/logout"  className = "nav-link" id = "profile-link">Logout</Link>
         </li>);
 
     var writeLink = ( <li className = "navbar-item">
@@ -39,7 +41,6 @@ const MyNav = () => {
                 <ul className = "navbar-nav mr-auto">
                    {cookies.user && writeLink}
                    {cookies.user && viewLink}
-                   {cookies.user}
                 </ul>
                 <ul className="navbar-nav navbar-right">
                     {cookies.user && profileLink}
