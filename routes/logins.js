@@ -4,7 +4,7 @@ const router = express.Router();
 
 // Bring in the User Model
 let User = require('../models/user.model');
-var isLoggedIn = false;
+//var isLoggedIn = false;
 
 
 // TODO: maybe move this somewhere else? 
@@ -79,11 +79,13 @@ router.post('/login', function(req,res, next) {
         }
 
         else {
-            req.session.email = user.email;
-            req.session.firstName = user.firstName;
-            req.session.lastName = user.lastName;
-            isLoggedIn = true;
-            console.log(req.session.firstName);
+            // req.session.email = user.email;
+            // req.session.firstName = user.firstName;
+            // req.session.lastName = user.lastName;
+            // isLoggedIn = true;
+            // console.log(req.session.firstName);
+            //res.redirect('/write');
+
             res.status(200).send('Successfully logged in');
         } 
     });
@@ -104,18 +106,18 @@ router.get('/logout', function(req,res) {
 // WHAT IT'S FOR: get user data for displaying on profile + updating too 
 // returns that user model/object
 // path name: /user/:id
-router.get('/userinfo', function(req, res){
-    if (isLoggedIn){
-         var userData = {
-             username: req.session.email, 
-             firstName : req.session.firstName,
-             lastName : req.session.lastName
-         }
-         res.send(userData);
-    }else{
-         res.send("not logged in");
-     }
-});
+// router.get('/userinfo', function(req, res){
+//     if (isLoggedIn){
+//          var userData = {
+//              username: req.session.email, 
+//              firstName : req.session.firstName,
+//              lastName : req.session.lastName
+//          }
+//          res.send(userData);
+//     }else{
+//          res.send("not logged in");
+//      }
+// });
 
 
 
