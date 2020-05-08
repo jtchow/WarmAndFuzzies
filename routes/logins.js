@@ -123,9 +123,4 @@ router.post('/user/update', function(req,res) {
 });
 
 
-// WHAT IT'S FOR: updating user data
-// path name: /user/update/:id
-// is given first name and last name to update
-
-
 module.exports = router;
