@@ -109,9 +109,19 @@ router.get('/user', function(req,res) {
 });
 
 
-// WHAT IT'S FOR: get user data for displaying on profile + updating too 
-// returns that user model/object
-// path name: /user/:id
+router.post('/user/update', function(req,res) {
+    // TODO handle current user email
+    const email  = req.session.email;
+    const newEmail = req.body.newEmail;
+    const newFirstName = req.body.firstName;
+    const newLastName = req.body.lastName ;
+
+    User.update(
+        { email: email },
+        { $set: { email: newEmail, firstName: newFirstName, lastName: newLastName } }
+    );
+});
+
 
 // WHAT IT'S FOR: updating user data
 // path name: /user/update/:id
