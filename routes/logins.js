@@ -4,7 +4,6 @@ const router = express.Router();
 
 // Bring in the User Model
 let User = require('../models/user.model');
-var isLoggedIn = false;
 
 
 // TODO: maybe move this somewhere else? 
@@ -23,18 +22,16 @@ function checkIfEmailExists(signupEmail){
 router.post('/', function(req,res) {
     if (req.session.email) {
         res.status(200).send('Logged in, send to write page');
-        console.log("logged in");
     }
 
     else {
         res.status(400).send('Must login first');
-        console.log("failed to see homepage");
     }
 });
 
 router.post('/signup', function(req,res) {
     const firstName = req.body.firstName;
-    const lastName = req.body.lastName;
+    const lastName = req.body.lastName; 
     const email = req.body.email;
     const password = req.body.password;
 
@@ -82,8 +79,6 @@ router.post('/login', function(req,res, next) {
             req.session.email = user.email;
             req.session.firstName = user.firstName;
             req.session.lastName = user.lastName;
-            isLoggedIn = true;
-            console.log(req.session.firstName);
             res.status(200).send('Successfully logged in');
         } 
     });
@@ -95,38 +90,28 @@ router.get('/logout', function(req,res) {
         if(err){
             res.status(500).send('Error: could not log out');
         } else {
-            isLoggedIn = false;
             res.status(200).send('Logged out');     
         }
     });
 });
 
-// WHAT IT'S FOR: get user data for displaying on profile + updating too 
-// returns that user model/object
-// path name: /user/:id
-router.get('/userinfo', function(req, res){
-    if (isLoggedIn){
-         var userData = {
-             username: req.session.email, 
-             firstName : req.session.firstName,
-             lastName : req.session.lastName
-         }
-         res.send(userData);
-    }else{
-         res.send("not logged in");
-     }
+
+router.get('/user', function(req,res) {
+    User.findOne({email: email}, {firstName: 1, lastName: 1, email: 1}, (err, userData) => {
+        if (err) {
+            res.status(500).send('Error: server error');
+        }
+
+        else {
+            res.status(200).send(userData);
+        }
+    });
 });
 
 
-
-// router.get('/isAuth'), function(req, res){
-//     if (isLoggedIn){
-//         res.send(true);
-//     }
-//     else{
-//         res.send(false);
-//     }
-// }
+// WHAT IT'S FOR: get user data for displaying on profile + updating too 
+// returns that user model/object
+// path name: /user/:id
 
 // WHAT IT'S FOR: updating user data
 // path name: /user/update/:id
