@@ -1,22 +1,23 @@
 import React from 'react';
 import "./Login.css";
 import axios from 'axios';
-import session from 'express-session';
+import {withRouter} from 'react-router';
 
-export default class Login extends React.Component
+class Login extends React.Component
 {
     constructor(props)
     {
         super(props);
         this.state = {
             email: "",
-            password: ""
+            password: "",
         }
 
         this.handleEmailChange = this.handleEmailChange.bind(this);
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
 
     handleEmailChange(event)
     {
@@ -47,7 +48,15 @@ export default class Login extends React.Component
 
         // check information with database
         axios.post('http://localhost:5000/login', login)
-            .then(res => console.log(res.data)); // might want to display what is sent back as error message? 
+            .then(res => 
+                console.log(res.data),
+                this.props.cookies.set('user', this.state.email, {path: '/'}),
+                // set cookies
+                this.props.history.push('/write')
+                
+                
+
+            ); // might want to display what is sent back as error message? 
             // check if we get a success , if so => redirect to write page
             // if success = false, then display error message and ask them to try loggin in again 
     }
@@ -73,3 +82,4 @@ export default class Login extends React.Component
         );
     }
 }
+export default withRouter(Login);

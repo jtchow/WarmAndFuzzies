@@ -1,8 +1,9 @@
 import React from 'react';
 import "./Signup.css";
 import axios from 'axios';
+import {withRouter} from 'react-router';
 
-export default class Signup extends React.Component
+class Signup extends React.Component
 {
     constructor(props)
     {
@@ -67,6 +68,7 @@ export default class Signup extends React.Component
         // store in database (will prob have to change localhost to something else)
         axios.post('http://localhost:5000/signup', newUser).then(response => {
             if (response.status === 200) {
+                this.props.cookies.set('user', this.state.email, {path: '/'});
                 this.props.history.push('/write');
             }
             else {
@@ -102,3 +104,5 @@ export default class Signup extends React.Component
         );
     }
 }
+
+export default withRouter(Signup);

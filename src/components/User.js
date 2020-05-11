@@ -8,7 +8,7 @@ export default class UserView extends React.Component
         super(props);
         this.state = {
             //test profile
-            username: "",
+            username: this.props.cookies.get('user'),
             first: "",
             last: "",
         }
@@ -16,20 +16,20 @@ export default class UserView extends React.Component
 
     // create thisWillMount method to set up the state using information from database
     // will get user data using id from session and get username, Name for the component to display
-    componentDidMount(){
-        axios.get('https://localhost:5000/user')
-            .then(response => {
-                // this.setState({
-                //     username: response.data.username,
-                //     first: response.data.firstName,
-                //     last: response.data.lastName
-                // })
-                console.log(response.data);
-            })
-            .catch(function (error){
-                console.log(error);
-            })
-    }
+    // componentDidMount(){
+    //     axios.get('https://localhost:5000/userinfo')
+    //         .then(response => {
+    //             this.setState({
+    //                 username: response.data.username,
+    //                 first: response.data.firstName,
+    //                 last: response.data.lastName
+    //             })
+    //             console.log(response.data);
+    //         })
+    //         .catch(function (error){
+    //             console.log(error);
+    //         })
+    // }
 
     render()
     {

@@ -5,7 +5,6 @@ const router = express.Router();
 // Bring in the User Model
 let User = require('../models/user.model');
 
-
 // TODO: maybe move this somewhere else? 
 function checkIfEmailExists(signupEmail){
     return User.findOne({email: signupEmail}).then(function(result){
@@ -79,6 +78,7 @@ router.post('/login', function(req,res, next) {
             req.session.email = user.email;
             req.session.firstName = user.firstName;
             req.session.lastName = user.lastName;
+
             res.status(200).send('Successfully logged in');
         } 
     });

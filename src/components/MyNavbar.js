@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import "./MyNavbar.css";
+import {useCookies} from 'react-cookie';
 
-
-const MyNav = () => {
-    const authEmail = "Hi"; // this should be set to the session email if there is one
+const MyNav = (props) => {
+    const [cookies, setCookie, removeCookie] = useCookies(['user']);
+    //const {cookies} = props.cookies; // this should be set to the session email if there is one
+    //setCookie('user', 'Tester', {path: '/'});
+    //removeCookie('user');
 
     var profileLink = ( <li className="navbar-item">
                         <Link to="/user-profile" className="nav-link" id="profile-link">My Profile</Link>
@@ -18,8 +21,10 @@ const MyNav = () => {
                         <Link to="/login" className="nav-link" id="profile-link">Log In</Link>
                     </li>);
 
+    //onClick = {() => removeCookie('user', {path: '/'}), props.history.push('/') }
+
     var logoutLink = (<li className = "navbar-item">
-        <Link to = "/logout" className = "nav-link" id = "profile-link">Logout</Link>
+        <Link to = "/logout"  className = "nav-link" id = "profile-link">Logout</Link>
         </li>);
 
     var writeLink = ( <li className = "navbar-item">
@@ -34,15 +39,15 @@ const MyNav = () => {
             <Link to="/" className="navbar-brand">Warm&Fuzzies</Link>
             <div className="collpase navbar-collapse">
                 <ul className = "navbar-nav mr-auto">
-                   {authEmail && writeLink}
-                   {authEmail && viewLink}
+                   {cookies.user && writeLink}
+                   {cookies.user && viewLink}
                 </ul>
                 <ul className="navbar-nav navbar-right">
-                    {authEmail && profileLink}
-                   {authEmail && logoutLink}
+                    {cookies.user && profileLink}
+                   {cookies.user && logoutLink}
                    
-                   {authEmail && signUpLink}
-                   {authEmail &&loginLink}
+                   {!cookies.user && signUpLink}
+                   {!cookies.user &&loginLink}
                 </ul>
             </div>
         </nav>
