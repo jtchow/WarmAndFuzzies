@@ -42,7 +42,6 @@ class Login extends React.Component
         const login = {
             email: this.state.email,
             password: this.state.password,
-            //session: session // not sure if this is the right way to handle
 
         }
 
@@ -52,13 +51,14 @@ class Login extends React.Component
                 console.log(res.data),
                 this.props.cookies.set('user', this.state.email, {path: '/'}),
                 // set cookies
-                this.props.history.push('/write')
-                
-                
+                this.props.history.push('/write') 
 
-            ); // might want to display what is sent back as error message? 
-            // check if we get a success , if so => redirect to write page
-            // if success = false, then display error message and ask them to try loggin in again 
+            )
+            .catch((e) => {
+                // show error message here
+                console.log(e);
+            }); // might want to display what is sent back as error message? 
+           
     }
 
     render()

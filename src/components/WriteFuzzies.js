@@ -36,7 +36,6 @@ export default class WriteFuzzies extends React.Component
                 this.setState({
                     recipients: response.data
                 })
-                console.log(response.data);
             })
             .catch(function (error){
                 console.log(error);
@@ -44,12 +43,13 @@ export default class WriteFuzzies extends React.Component
 
         // call another method to get a list of all users we've written to already
         
-        // axios.get("http://localhost:5000/notes/users-written-to", session)
-        //     .then(response => {
-        //         this.setState({
-        //             writtenTo: response.data.writtenTo
-        //         });
-        //     })
+        axios.get("http://localhost:5000/notes/users-written-to", this.state.sender)
+            .then(response => {
+                this.setState({
+                    writtenTo: response.data.writtenTo
+                });
+                console.log(response.data.writtenTo);
+            })
 
     }
 
@@ -99,7 +99,7 @@ export default class WriteFuzzies extends React.Component
                 message: this.state.message
             }
 
-            axios.post("https://localhost:5000/send", note)
+            axios.post("http://localhost:5000/send", note)
                 .then(res => console.log(res.data));
                 // need to implement check if the post request was successful
 
@@ -116,28 +116,6 @@ export default class WriteFuzzies extends React.Component
 
     render()
     {
-        //in future get this list from api call
-        // const recipients = [
-        //     {name: "Angela", id: 1},
-        //     {name: "Annie", id: 2},
-        //     {name: "Brandon", id: 3},
-        //     {name: "Brian", id: 4},
-        //     {name: "Darren", id: 5},
-        //     {name: "Jason", id: 6},
-        //     {name: "Kasey", id: 7},
-        //     {name: "Kylie", id: 8},
-        //     {name: "Kyle", id: 9},
-        //     {name: "Richard", id: 10},
-        //     {name: "Sarah", id: 11},
-        //     {name: "Tyler Onishi", id: 12},
-        //     {name: "Tyler Yin", id: 13},
-        // ];
-
-        //const writtenTo = [1,3,4,5]; //list of ids of users who the user has written to--also get this from api
-
-        // IMPORTANT:
-        // will have to convert the user ids to names when we display them in the filter
-        // BUT we still want to save the recipient as an ID to make access easier
 
         // user list filter functions
         const noFilter = (recipient) => (true);

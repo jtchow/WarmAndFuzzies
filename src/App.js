@@ -31,7 +31,7 @@ class App extends React.Component{
           <Route path= "/write" exact render = {() => (<WriteFuzzies cookies = {this.props.cookies}/>)}/>
           {/* Change the write fuzzies component when writing period is done to viewing component */}
           <Route path="/user-profile" exact render = {() => (<UserView cookies = {this.props.cookies}/>)} />
-          <Route path="/user-profile/edit" exact component={EditUserView} />
+          <Route path="/user-profile/edit" exact render = {() => (<EditUserView cookies = {this.props.cookies}/>)} />
         </div>
     </Router>
   );

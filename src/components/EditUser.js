@@ -1,21 +1,32 @@
 import React from 'react';
 import "./EditUser.css";
 import axios from 'axios';
+import {withRouter} from 'react-router';
 
-export default class EditUserView extends React.Component 
+ class EditUserView extends React.Component 
 {
     constructor(props)
     {
         super(props);
         this.state = {
-            first: "Annie",
-            last: "Hirata"
+            first: "",
+            last: ""
         }
 
         this.handleFirstChange = this.handleFirstChange.bind(this);
         this.handleLastChange = this.handleLastChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleCancel = this.handleCancel.bind(this);
+    }
+
+    componentDidMount(){
+        axios.get("http://localhost:5000/user", this.props.cookies.get('user'))
+            .then(response => {
+                this.setState({
+                    first: response.firstName,
+                    last: response.lastName
+                })
+            })
     }
 
     handleFirstChange(event)
@@ -39,12 +50,14 @@ export default class EditUserView extends React.Component
         console.log(this.state);
 
         const updatedUserInfo = {
+            //newEmail: 
+            email: this.props.cookies.get('user'),
             first: this.state.first,
             last: this.state.last
         }
 
-        // axios.post("https://localhost5000/update/" + [USER ID HERE], updatedUserInfo)
-        //     .then(res => console.log(res.data));
+        axios.post("https://localhost5000/user/update", updatedUserInfo)
+            .then(res => console.log(res.data));
 
         //if successful, reroute to user profile page
 
@@ -76,3 +89,5 @@ export default class EditUserView extends React.Component
         );
     }
 }
+
+export default withRouter(EditUserView);
