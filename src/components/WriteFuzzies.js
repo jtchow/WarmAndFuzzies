@@ -43,12 +43,13 @@ export default class WriteFuzzies extends React.Component
 
         // call another method to get a list of all users we've written to already
         
-        axios.get("http://localhost:5000/notes/users-written-to", this.state.sender)
+        axios.get("http://localhost:5000/notes/users-written-to", {params: {email: this.state.sender}})
             .then(response => {
+                console.log(response);
                 this.setState({
-                    writtenTo: response.data.writtenTo
+                    writtenTo: response.data
                 });
-                console.log(response.data.writtenTo);
+                console.log(response.data);
             })
 
     }
@@ -80,8 +81,6 @@ export default class WriteFuzzies extends React.Component
     handleSubmit(event)
     {
         event.preventDefault();
-
-    
 
         if(this.state.recipient === "")
         {
@@ -116,16 +115,15 @@ export default class WriteFuzzies extends React.Component
 
     render()
     {
-
         // user list filter functions
+
         const noFilter = (recipient) => (true);
         const filterWritten = (recipient) => (this.state.writtenTo.includes(recipient.email));
         const filterNotWritten = (recipient) => (!this.state.writtenTo.includes(recipient.email));
 
         // filter options here
         const filterFunc = this.state.filter === "all" ? noFilter : this.state.filter === "written" ? filterWritten : filterNotWritten;
-        const recipientNames = this.state.recipients.filter(filterFunc).map((recipient) => recipient.name); // this will break rn bc no .name value
-        //name list needs to be passed from props or use api call somewhere
+        const recipientNames = this.state.recipients.filter(filterFunc).map((recipient) => (recipient.firstName + " " + recipient.lastName)); // this will break rn bc no .name value
 
 
         return (
