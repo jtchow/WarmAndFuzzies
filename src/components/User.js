@@ -21,7 +21,6 @@ export default class UserView extends React.Component
             params: {email: this.state.username}
         })
             .then(response => {
-                console.log(response);
                 this.setState({
                     username: response.data.email,
                     first: response.data.firstName,
