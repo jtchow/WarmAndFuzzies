@@ -26,11 +26,11 @@ const port = process.env.PORT || 5000;
 
 // REDIS STUFF (COMMENTED OUT FOR NOW)
 
-//const redis = require('redis');
-//const redisClient = redis.createClient();
-//const redisStore = require('connect-redis')(session);
+// const redis = require('redis');
+// const redisClient = redis.createClient();
+// const redisStore = require('connect-redis')(session);
 
-// setup redis connection 
+// // setup redis connection 
 // redisClient.on('error', (err) => {
 //   console.log('Redis error: ', err);
 // });
