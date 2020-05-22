@@ -111,15 +111,24 @@ router.get('/user', function(req,res) {
 
 router.post('/user/update', function(req,res) {
     // TODO handle current user email
-    const email  = req.session.email;
-    const newEmail = req.body.newEmail;
-    const newFirstName = req.body.firstName;
-    const newLastName = req.body.lastName ;
-
-    User.update(
+    const email  = req.query.email;
+    const newFirstName = req.query.first;
+    const newLastName = req.query.last;
+    console.log(email);
+    User.updateOne(
         { email: email },
-        { $set: { email: newEmail, firstName: newFirstName, lastName: newLastName } }
-    );
+        { $set: { firstName: newFirstName, lastName: newLastName } }, 
+        (err, updates) => {
+            if (err) {
+                res.status(404).send('Could not post');
+            }
+
+            else {
+                res.status(200).send(updates)
+            }
+        }
+    )
+    
 });
 
 

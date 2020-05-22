@@ -9,6 +9,7 @@ import {withRouter} from 'react-router';
     {
         super(props);
         this.state = {
+            username: this.props.cookies.get('user'),
             first: "",
             last: ""
         }
@@ -20,7 +21,9 @@ import {withRouter} from 'react-router';
     }
 
     componentDidMount(){
-        axios.get("http://localhost:5000/user", this.props.cookies.get('user'))
+        axios.get('http://localhost:5000/user', {          
+            params: {email: this.state.username}
+        })
             .then(response => {
                 this.setState({
                     first: response.firstName,
@@ -46,18 +49,15 @@ import {withRouter} from 'react-router';
     handleSubmit(event)
     {
         event.preventDefault();
-
-        console.log(this.state);
-
-        const updatedUserInfo = {
-            //newEmail: 
-            email: this.props.cookies.get('user'),
-            first: this.state.first,
-            last: this.state.last
-        }
-
-        axios.post("https://localhost5000/user/update", updatedUserInfo)
-            .then(res => console.log(res.data));
+        
+        axios.post("http://localhost:5000/user/update", null, {
+            params: {
+                email: this.state.username,
+                first: this.state.first,
+                last: this.state.last
+            }  
+        })
+        .then(res => console.log(res.data));
 
         //if successful, reroute to user profile page
 
