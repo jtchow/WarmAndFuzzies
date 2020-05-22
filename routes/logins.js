@@ -97,10 +97,11 @@ router.get('/logout', function(req,res) {
 
 
 router.get('/user', function(req,res) {
-    const email = req.body.email;
+    const email = req.query.email;
+    console.log(email);
     User.findOne({email: email}, {firstName: 1, lastName: 1, email: 1}, (err, userData) => {
-        if (err) {
-            res.status(500).send('Error: server error');
+        if (userData === null) {
+            res.status(404).send('Error: server error');
         }
         else {
             res.status(200).send(userData);
