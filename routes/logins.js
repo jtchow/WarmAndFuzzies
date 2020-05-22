@@ -110,7 +110,7 @@ router.get('/user', function(req,res) {
 
 
 router.post('/user/update', function(req,res) {
-    // TODO handle current user email
+    // TODO logic for if param is null, don't update 
     const email  = req.query.email;
     const newFirstName = req.query.first;
     const newLastName = req.query.last;
