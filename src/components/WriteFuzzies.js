@@ -49,7 +49,6 @@ export default class WriteFuzzies extends React.Component
                 this.setState({
                     writtenTo: response.data
                 });
-                console.log(response.data);
             })
 
     }
@@ -97,19 +96,27 @@ export default class WriteFuzzies extends React.Component
                 recipient: this.state.recipient,
                 message: this.state.message
             }
+            axios.post("http://localhost:5000/notes/send", note)
+                .then(res => {
+                    // need to implement check if the post request was successful
+                    if(res.status != 200)
+                        alert("Error");
+                    else
+                    {
+                        //check if successful--if successful clear form else dont and let them try again
+                        this.setState({
+                            recipient: '',
+                            message: ''
+                        });
+                        this.typeahead.getInstance().clear();
 
-            axios.post("http://localhost:5000/send", note)
-                .then(res => console.log(res.data));
-                // need to implement check if the post request was successful
-
-            //check if successful--if successful clear form else dont and let them try again
-            this.setState({
-                recipient: '',
-                message: ''
-            });
-            this.typeahead.getInstance().clear();
-
-            alert("Warm and fuzzy sent!");
+                        alert("Warm and fuzzy sent!");
+                    }
+                })
+                .catch(function (error){
+                    alert("Error");
+                    console.log(error);
+                });
         }
     }
 
@@ -139,8 +146,11 @@ export default class WriteFuzzies extends React.Component
                                 id="recipient-select"
                                 options={recipientNames}
                                 onChange={(selected) => {
-                                    let recipientID = recipients.filter((recipient) => (recipient.name === selected[0]))[0];
-                                    recipientID = recipientID === undefined ? "" : recipientID.id;
+                                    // fix--doesnt work for duplicate names
+                                    // console.log(selected);
+                                    let recipientID = this.state.recipients.filter(recipient => ((recipient.firstName + " " + recipient.lastName) === selected[0]))[0];
+                                    recipientID = (recipientID === undefined ? "" : recipientID.email);
+                                    // console.log(recipientID);
                                     this.setState({recipient: recipientID});
                                 }}
                                 placeholder="Choose a recipient"
