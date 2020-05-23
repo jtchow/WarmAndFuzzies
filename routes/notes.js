@@ -39,12 +39,6 @@ router.post('/send', function(req,res) {
     newNote.save();
 
     // update user writtenTo array in DB
-<<<<<<< HEAD
-    // User.update(
-    //     { email: sender },
-    //     { $push: { writtenTo: recipient } }
-    // );
-=======
     User.update(
         { email: sender },
         { $push: { writtenTo: recipient } }
@@ -52,7 +46,6 @@ router.post('/send', function(req,res) {
     .then(() => res.status(200).send('Sent warm and fuzzy!'))
     .catch(err => res.status(500).json('Error: ' + err));
 
->>>>>>> 4f4f0e0... /send route do update before response
 });
 
 
@@ -75,11 +68,7 @@ router.get('/users-all', function(req,res) {
 // Get list of all users written to. Return value: cursor with list of emails
 router.get('/users-written-to', function(req,res) {
     const currentUserEmail = req.query.email;
-<<<<<<< HEAD
-    User.findOne({email: currentUserEmail}, {writtenTo: true},(err, usersWrittenTo)=>{
-=======
     User.findOne({email: currentUserEmail}, {writtenTo: true}, (err, usersWrittenTo)=>{
->>>>>>> 4f4f0e0... /send route do update before response
         if (err) {
             res.status(404).send("Error: Could not retrieve written to user list");
         }
