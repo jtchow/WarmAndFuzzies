@@ -138,11 +138,11 @@ export default class WriteFuzzies extends React.Component
                                 style={{width:"68%", float: "left"}}
                                 id="recipient-select"
                                 options={recipientNames}
-                                // onChange={(selected) => {
-                                //     let recipientID = recipients.filter((recipient) => (recipient.name === selected[0]))[0];
-                                //     recipientID = recipientID === undefined ? "" : recipientID.id;
-                                //     this.setState({recipient: recipientID});
-                                // }}
+                                onChange={(selected) => {
+                                    let recipientID = recipients.filter((recipient) => (recipient.name === selected[0]))[0];
+                                    recipientID = recipientID === undefined ? "" : recipientID.id;
+                                    this.setState({recipient: recipientID});
+                                }}
                                 placeholder="Choose a recipient"
                                 ref={(typeahead) => this.typeahead = typeahead}
                             />

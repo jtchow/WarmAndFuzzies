@@ -64,7 +64,7 @@ router.get('/users-all', function(req,res) {
 
 // Get list of all users written to. Return value: cursor with list of emails
 router.get('/users-written-to', function(req,res) {
-    currentUserEmail = req.body.email;
+    currentUserEmail = req.query.email;
     User.findOne({email: currentUserEmail}, {writtenTo: true},(err, usersWrittenTo)=>{
         if (err) {
             res.status(404).send("Error: Could not retrieve written to user list");
