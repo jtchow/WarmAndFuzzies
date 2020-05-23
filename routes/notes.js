@@ -77,6 +77,4 @@ router.get('/users-written-to', function(req,res) {
 });
 
 
-// RETURN NOT WRITTEN TO USERS ROUTE
-// logic: find users where email not like logged in user's writtenTo array
 module.exports = router;
