@@ -22,7 +22,6 @@ router.get('/view', function(req,res) {
 // Send note endpoint
 router.post('/send', function(req,res) {
     const sender = req.body.sender;
-    // TODO recipient needs to be an email
     const recipient = req.body.recipient;
     const contents = req.body.message;
 
@@ -74,7 +73,7 @@ router.get('/users-written-to', function(req,res) {
         }
 
         else {
-            res.status(200).json(usersWrittenTo);
+            res.status(200).send(usersWrittenTo);
         }
     });
 });
