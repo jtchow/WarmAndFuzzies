@@ -4,11 +4,6 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import "./WriteFuzzies.css";
 import axios from 'axios';
 
-/*
-todo: need to figure out how to pass props using router
-add search box in dropdown
-*/
-
 export default class WriteFuzzies extends React.Component
 {
     constructor(props)
@@ -45,9 +40,8 @@ export default class WriteFuzzies extends React.Component
         
         axios.get("http://localhost:5000/notes/users-written-to", {params: {email: this.state.sender}})
             .then(response => {
-                console.log(response);
                 this.setState({
-                    writtenTo: response.data
+                    writtenTo: response.data.writtenTo
                 });
             })
 
@@ -123,7 +117,6 @@ export default class WriteFuzzies extends React.Component
     render()
     {
         // user list filter functions
-
         const noFilter = (recipient) => (true);
         const filterWritten = (recipient) => (this.state.writtenTo.includes(recipient.email));
         const filterNotWritten = (recipient) => (!this.state.writtenTo.includes(recipient.email));
@@ -147,10 +140,8 @@ export default class WriteFuzzies extends React.Component
                                 options={recipientNames}
                                 onChange={(selected) => {
                                     // fix--doesnt work for duplicate names
-                                    // console.log(selected);
                                     let recipientID = this.state.recipients.filter(recipient => ((recipient.firstName + " " + recipient.lastName) === selected[0]))[0];
                                     recipientID = (recipientID === undefined ? "" : recipientID.email);
-                                    // console.log(recipientID);
                                     this.setState({recipient: recipientID});
                                 }}
                                 placeholder="Choose a recipient"
