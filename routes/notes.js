@@ -21,10 +21,10 @@ router.get('/view', function(req,res) {
 
 // Send note endpoint
 router.post('/send', function(req,res) {
-    const sender = req.session.email;
+    const sender = req.body.sender;
     // TODO recipient needs to be an email
     const recipient = req.body.recipient;
-    const contents = req.body.contents;
+    const contents = req.body.message;
 
     // create new Note object for DB insertion
     const newNote = new Note({
@@ -39,10 +39,10 @@ router.post('/send', function(req,res) {
     .catch(err => res.status(500).json('Error: ' + err));
 
     // update user writtenTo array in DB
-    User.update(
-        { email: sender },
-        { $push: { writtenTo: recipient } }
-    );
+    // User.update(
+    //     { email: sender },
+    //     { $push: { writtenTo: recipient } }
+    // );
 });
 
 
@@ -64,7 +64,7 @@ router.get('/users-all', function(req,res) {
 
 // Get list of all users written to. Return value: cursor with list of emails
 router.get('/users-written-to', function(req,res) {
-    currentUserEmail = req.body.email;
+    const currentUserEmail = req.query.email;
     User.findOne({email: currentUserEmail}, {writtenTo: true},(err, usersWrittenTo)=>{
         if (err) {
             res.status(404).send("Error: Could not retrieve written to user list");
@@ -76,7 +76,4 @@ router.get('/users-written-to', function(req,res) {
     });
 });
 
-
-// RETURN NOT WRITTEN TO USERS ROUTE
-// logic: find users where email not like logged in user's writtenTo array
 module.exports = router;
