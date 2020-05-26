@@ -3,10 +3,10 @@ import React from 'react';
 
 class Logout extends React.Component
 {
-    constructor(props)
-    {
-        super(props);  
-    }
+    // constructor(props)
+    // {
+    //     super(props);  
+    // }
 
     componentDidMount(){
         this.props.cookies.remove('user', {path: '/'});

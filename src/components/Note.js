@@ -8,7 +8,7 @@ const Note = (props) => {
     return(
         <div className = "container">
             <p>{props.content}</p>
-            <h4><strong>{props.sender}</strong></h4>
+            <p><strong>From: {props.sender}</strong></p>
         </div>
     );
 }

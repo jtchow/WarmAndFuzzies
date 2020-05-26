@@ -23,6 +23,7 @@ export default class WriteFuzzies extends React.Component
         this.handleMessageChange = this.handleMessageChange.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.updateWrittenTo = this.updateWrittenTo.bind(this);
     }
 
     componentDidMount(){
@@ -45,6 +46,15 @@ export default class WriteFuzzies extends React.Component
                 });
             })
 
+    }
+
+    updateWrittenTo(event){
+        axios.get("http://localhost:5000/notes/users-written-to", {params: {email: this.state.sender}})
+        .then(response => {
+            this.setState({
+                writtenTo: response.data.writtenTo
+            });
+        })
     }
 
 
@@ -93,7 +103,7 @@ export default class WriteFuzzies extends React.Component
             axios.post("http://localhost:5000/notes/send", note)
                 .then(res => {
                     // need to implement check if the post request was successful
-                    if(res.status != 200)
+                    if(res.status !== 200)
                         alert("Error");
                     else
                     {
@@ -112,6 +122,8 @@ export default class WriteFuzzies extends React.Component
                     console.log(error);
                 });
         }
+
+        this.updateWrittenTo();
     }
 
     render()

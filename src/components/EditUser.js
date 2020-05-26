@@ -10,8 +10,8 @@ import {withRouter} from 'react-router';
         super(props);
         this.state = {
             username: this.props.cookies.get('user'),
-            first: "",
-            last: ""
+            first: '',
+            last: ''
         }
 
         this.handleFirstChange = this.handleFirstChange.bind(this);
@@ -25,9 +25,10 @@ import {withRouter} from 'react-router';
             params: {email: this.state.username}
         })
             .then(response => {
+                console.log(response);
                 this.setState({
-                    first: response.firstName,
-                    last: response.lastName
+                    first: response.data.firstName,
+                    last: response.data.lastName
                 })
             })
     }
@@ -78,9 +79,9 @@ import {withRouter} from 'react-router';
                 <form id="edit-user-form" onSubmit={this.handleSubmit}>
                     <div id="edit-input-container">
                     <label className="edit-label">First Name</label>
-                    <input className="form-control edit-input" value={this.state.first} onChange={this.handleFirstChange}></input>
+                    <input className="form-control edit-input" type = "text" value = {this.state.first} onChange={this.handleFirstChange}></input>
                     <label className="edit-label">Last Name</label>
-                    <input className="form-control edit-input" value={this.state.last} onChange={this.handleLastChange}></input>
+                    <input className="form-control edit-input" type = "text" value = {this.state.last} onChange={this.handleLastChange}></input>
                     </div>
                     <button type="submit" className="btn btn-primary mb-2" id="profile-save-button">Save</button>
                     <button type="button" className="btn btn-primary mb-2" id="profile-cancel-button" onClick={this.handleCancel}>Cancel</button>

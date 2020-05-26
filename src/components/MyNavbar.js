@@ -4,10 +4,7 @@ import "./MyNavbar.css";
 import {useCookies} from 'react-cookie';
 
 const MyNav = (props) => {
-    const [cookies, setCookie, removeCookie] = useCookies(['user']);
-    //const {cookies} = props.cookies; // this should be set to the session email if there is one
-    //setCookie('user', 'Tester', {path: '/'});
-    //removeCookie('user');
+    const [cookies] = useCookies(['user']);
 
     var profileLink = ( <li className="navbar-item">
                         <Link to="/user-profile" className="nav-link" id="profile-link">My Profile</Link>

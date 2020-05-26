@@ -11,29 +11,40 @@ export default class Bag extends Component{
         super(props);
 
         this.state = {
-            firstName: this.props.cookies.get('user'), // need to pass this from somewhere?
+            email: this.props.cookies.get('user'),
+            firstName: "", // need to pass this from somewhere?
             lastName: "",
             userID: "",
             notes: [] // get request will fill this array with notes
         }
     }
 
-    // NEED A LOGGED IN USER OR VALUE TO MAKE THIS REQUEST! 
+    componentWillMount(){
+        axios.get("http://localhost:5000/notes/view", {params: {email: this.state.sender}})
+        .then(response => {
+            console.log(response.data);
+            if(response.status == 200){
+                this.setState({
+                    notes: response.data
+                });
+            }
+        })
+        .catch((error) =>{
+            console.log(error);
+        })
 
-    // need to pass in session!
+        axios.get('http://localhost:5000/user', {          
+            params: {email: this.state.email}
+        })
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    firstName: response.data.firstName,
+                    lastName: response.data.lastName
+                })
+            })
 
-    // componentWillMount(){
-    //     axios.get('http://localhost:5000/view')
-    //     .then(response =>{
-    //         this.setState({
-    //             notes: response.data.notes
-    //         })
-    //     })
-    //     .catch((error) =>{
-    //         console.log(error);
-    //     })
-
-    // }
+    }
 
     render(){
         var notes = this.state.notes;

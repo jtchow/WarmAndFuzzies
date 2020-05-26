@@ -7,12 +7,13 @@ let User = require('../models/user.model');
 // View notes endpoint 
 router.get('/view', function(req,res) {
     // TODO handle multiple documents returned here? 
-    const userEmail = req.session.email;
+    const userEmail = req.query.email;
     Note.find({recipient: userEmail},(err, notes)=>{
         if(err) {
             res.status(404).send(err);
         }
         else {
+            console.log(notes);
             res.status(200).send(notes);
         }
     });

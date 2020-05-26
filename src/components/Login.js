@@ -47,18 +47,15 @@ class Login extends React.Component
 
         // check information with database
         axios.post('http://localhost:5000/login', login)
-            .then(res => 
-                console.log(res.data),
-                this.props.cookies.set('user', this.state.email, {path: '/'}),
-                // set cookies
-                this.props.history.push('/write') 
+            .then((response) => {
+                console.log(response);
+                this.props.cookies.set('user', this.state.email, {path: '/'});
+                this.props.history.push('/write');
 
-            )
-            .catch((e) => {
-                // show error message here
-                console.log(e);
-            }); // might want to display what is sent back as error message? 
-           
+            }, (error) => {
+                console.log(error);
+
+            });           
     }
 
     render()
