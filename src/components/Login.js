@@ -12,25 +12,7 @@ class Login extends React.Component
             email: "",
             password: "",
         }
-
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-
-    handleEmailChange(event)
-    {
-        this.setState({
-            email: event.target.value
-        });
-    }
-
-    handlePasswordChange(event)
-    {
-        this.setState({
-            password: event.target.value
-        });
     }
     
     handleSubmit(event)
@@ -42,18 +24,17 @@ class Login extends React.Component
         const login = {
             email: this.state.email,
             password: this.state.password,
-
         }
 
         // check information with database
         axios.post('http://localhost:5000/login', login)
             .then((response) => {
-                console.log(response);
                 this.props.cookies.set('user', this.state.email, {path: '/'});
                 this.props.history.push('/write');
 
             }, (error) => {
                 console.log(error);
+                alert(error.response.data.error);
                 // CREATE SOME ERROR POP UP HERE OR SOMETHING!
 
             });           
@@ -67,9 +48,9 @@ class Login extends React.Component
                 <form id="login-form" onSubmit={this.handleSubmit}>
                     <div id="login-container">
                         <label className="login-label">Email</label>
-                        <input className="form-control login-input" value={this.state.email} onChange={this.handleEmailChange}></input>
+                        <input className="form-control login-input" value={this.state.email} onChange={(event) => this.setState({email: event.target.value})}></input>
                         <label className="login-label">Password</label>
-                        <input className="form-control login-input" type="password" value={this.state.password} onChange={this.handlePasswordChange}></input>
+                        <input className="form-control login-input" type="password" value={this.state.password} onChange={(event) => this.setState({password: event.target.value}) }></input>
                     </div>
                     <div className="forgot-password">
                         <a href="/forgot-password" id="forgot">Forgot password?</a>

@@ -12,42 +12,10 @@ class Signup extends React.Component
             first: "",
             last: "",
             email: "",
-            password: ""
+            password: "", 
+            errorMessage: null
         }
-
-        this.handleFirstChange = this.handleFirstChange.bind(this);
-        this.handleLastChange = this.handleLastChange.bind(this);
-        this.handleEmailChange = this.handleEmailChange.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
-    handleFirstChange(event)
-    {
-        this.setState({
-            first: event.target.value
-        });
-    }
-
-    handleLastChange(event)
-    {
-        this.setState({
-            last: event.target.value
-        });
-    }
-
-    handleEmailChange(event)
-    {
-        this.setState({
-            email: event.target.value
-        });
-    }
-
-    handlePasswordChange(event)
-    {
-        this.setState({
-            password: event.target.value
-        });
     }
     
     handleSubmit(event)
@@ -67,17 +35,10 @@ class Signup extends React.Component
 
         // store in database (will prob have to change localhost to something else)
         axios.post('http://localhost:5000/signup', newUser).then(response => {
-            if (response.status === 200) {
-                this.props.cookies.set('user', this.state.email, {path: '/'});
-                this.props.history.push('/write');
-            }
-            else {
-                console.log("failed");
-                window.alert('nah');
-            }
-          })
-          .catch(function(error) {
-            console.log(error);
+            this.props.cookies.set('user', this.state.email, {path: '/'});
+            this.props.history.push('/write');
+          }).catch((error) => {
+                this.setState({errorMessage: error.response.data.error})
           });
           
     }
@@ -85,18 +46,20 @@ class Signup extends React.Component
     render()
     {
         return (
-            <div id="signup">
+            <div id="signup" className = "container">
                 <h3 style={{marginBottom: "4%"}}>Sign Up</h3>
                 <form id="signup-form" onSubmit={this.handleSubmit}>
                     <div id="signup-container">
                     <label className="signup-label">First Name</label>
-                    <input className="form-control signup-input" value={this.state.first} onChange={this.handleFirstChange}></input>
+                    <input className="form-control signup-input" value={this.state.first} onChange={(event) => {this.setState({first: event.target.value})}}></input>
                     <label className="signup-label">Last Name</label>
-                    <input className="form-control signup-input" value={this.state.last} onChange={this.handleLastChange}></input>
+                    <input className="form-control signup-input" value={this.state.last} onChange={(event) => this.setState({last: event.target.value})}></input>
                     <label className="signup-label">UCI Email</label>
-                    <input className="form-control signup-input" value={this.state.email} onChange={this.handleEmailChange}></input>
+                    <input className="form-control signup-input" value={this.state.email} onChange={(event) => this.setState({email: event.target.value})}></input>
                     <label className="signup-label">Password</label>
-                    <input className="form-control signup-input" type="password" value={this.state.password} onChange={this.handlePasswordChange}></input>
+                    <input className="form-control signup-input" type="password" value={this.state.password} onChange={(event) => this.setState({password: event.target.value})}></input>
+                    <p className = "errorMessage">{this.state.errorMessage}</p>
+
                     </div>
                     <button type="submit" className="btn btn-primary mb-2" id="signup-button">Sign Up</button>
                 </form>

@@ -16,6 +16,7 @@ router.post('/signup', async (req,res) =>  {
         // Check if the email is in use already
         const existingUser = await User.findOne({email: email})
         if (existingUser){ // if email already taken 
+            console.log("existing user");
             return res.status(400).send({error: "Email already in use"});
         }
 
@@ -31,8 +32,6 @@ router.post('/signup', async (req,res) =>  {
         await newUser.save()
         res.status(201).send(newUser);
     }catch(e){
-        console.log("There was an error!")
-        console.log("error: ", e)
         res.status(400).send(e)
     }
 });
