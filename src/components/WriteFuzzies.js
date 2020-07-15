@@ -26,7 +26,7 @@ export default class WriteFuzzies extends React.Component
     }
 
     componentDidMount(){
-        axios.get('http://localhost:5000/notes/users-all')
+        axios.get('http://localhost:5000/users-all')
             .then(response => {
                 this.setState({
                     recipients: response.data

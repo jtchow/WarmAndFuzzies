@@ -6,7 +6,6 @@ let User = require('../models/user.model');
 
 // View notes endpoint 
 router.get('/view/:email', async (req,res) =>  {
-    // TODO handle multiple documents returned here? 
     const userEmail = req.params.email;
     console.log(req.params);
     console.log(userEmail);
@@ -37,7 +36,7 @@ router.post('/send', async (req,res) => {
         const update = await User.update(
             { email: sender },
             { $push: { writtenTo: recipient } })
-        res.status(200).send("Sent warm and fuzzy!")
+        res.status(200).send({note: note, update: update})
 
 
     } catch (e) {
@@ -46,21 +45,6 @@ router.post('/send', async (req,res) => {
 
 });
 
-
-// Get list of all users. Return value: cursor with user first name, last name, and email
-router.get('/users-all', function(req,res) {
-    User.find({}, {firstName: 1, lastName: 1, email: 1},(err, users)=>{
-        if (err) {
-            res.status(404).send("Error: Could not retrieve user list");
-        }
-
-        else {
-           // console.log("sending users");
-           // console.log(users);
-            res.status(200).send(users);
-        }
-    });
-});
 
 
 // Get list of all users written to. Return value: cursor with list of emails

@@ -92,6 +92,21 @@ router.get('/user', async (req,res) => {
     }
 });
 
+// Get list of all users. Return value: cursor with user first name, last name, and email
+router.get('/users-all', async (req,res) => {
+    try{
+        const users = await User.find({}, {firstName: 1, lastName: 1, email: 1})
+        // check if users were found
+        if (!users){
+            return res.status(204).send("There are currently no users to send notes to")
+        }
+        res.status(200).send(users);
+
+    }catch(e){
+        res.status(500).send(e);
+    }
+});
+
 // can handle user profile changes
 router.post('/user/update', async (req, res) => {
     // TODO logic for if param is null, don't update 
