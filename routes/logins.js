@@ -5,133 +5,119 @@ const router = express.Router();
 // Bring in the User Model
 let User = require('../models/user.model');
 
-// TODO: maybe move this somewhere else? 
-function checkIfEmailExists(signupEmail){
-    return User.findOne({email: signupEmail}).then(function(result){
-        if (result === null){
-            return false;
-        }
-        else {
-            return true;
-        }
-    });
-}
 
-
-router.post('/', function(req,res) {
-    if (req.session.email) {
-        res.status(200).send('Logged in, send to write page');
-    }
-
-    else {
-        res.status(400).send('Must login first');
-    }
-});
-
-router.post('/signup', function(req,res) {
+router.post('/signup', async (req,res) =>  {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName; 
     const email = req.body.email;
     const password = req.body.password;
 
-    checkIfEmailExists(email).then(function(emailExists) {
-        if (emailExists) {
-            res.status(400).send('User account already created with this email');
-
+    try{
+        // Check if the email is in use already
+        const existingUser = await User.findOne({email: email})
+        if (existingUser){ // if email already taken 
+            return res.status(400).send({error: "Email already in use"});
         }
-        else {
-            const newUser = new User({
-                firstName,
-                lastName,
-                email,
-                password
-            });
 
-            newUser.password = newUser.generateHash(newUser.password);
-            newUser.save()
-            .then(() => res.status(200).send('User successfully added!'))
-            .catch(err => res.status(500).json('Error: ' + err))
-        }   
-    });
+        // Create and save new user
+        const newUser = new User({
+            firstName,
+            lastName,
+            email,
+            password
+        });     
+        // FIX PASSWORD ENCRYPTION LATER! 
+        newUser.password = newUser.generateHash(newUser.password);
+        await newUser.save()
+        res.status(201).send(newUser);
+    }catch(e){
+        console.log("There was an error!")
+        console.log("error: ", e)
+        res.status(400).send(e)
+    }
 });
 
 
 // Route for Login Process
-router.post('/login', function(req,res, next) {
-    const email = req.body.email;
-    const password = req.body.password;
-
-    User.findOne({email: email}, (err, user) => {
-        if (err) {
-            res.status(500).send('Error: server error');
-        }
-        
-        else if (user === null) {
-            res.status(404).send('Error: no user exists with that email');
+router.post('/login', async (req,res) => {
+    try{
+        // Attempt to fetch user associated with given email
+        const user = await User.findOne({email: req.body.email})
+        if (!user){ // not a valid email
+            return res.status(404).send({error: "No user exists with that email"})
         }
 
-        else if (!user.validPassword(password)) {
-            res.status(404).send('Error: Invalid Password');
+        // check if password correct
+        if (!user.validPassword(req.body.password)){
+            return res.status(401).send({error: "Incorrect password"})
         }
 
-        else {
-            req.session.email = user.email;
-            req.session.firstName = user.firstName;
-            req.session.lastName = user.lastName;
+        // send back user information (CHANGE THIS LATER!)
+        console.log(user);
+        const userInfo = {
+            email: user.email, 
+            firstName: user.firstName, 
+            lastName: user.lastName
+        }
 
-            res.status(200).send('Successfully logged in');
-        } 
-    });
+        // activate session somehow?
+
+        res.status(200).send(userInfo);
+
+
+    } catch(e){
+        res.status(500).send(e);
+    }
 });
 
-
+// NOT SURE HOW THIS WOULD WORK (not in use right now)
 router.get('/logout', function(req,res) {
-    req.session.destroy(function(err){
-        if(err){
-            res.status(500).send('Error: could not log out');
-        } else {
-            res.status(200).send('Logged out');     
-        }
-    });
+    res.send("Not implemented yet!")
+    // req.session.destroy(function(err){
+    //     if(err){
+    //         res.status(500).send('Error: could not log out');
+    //     } else {
+    //         res.status(200).send('Logged out');     
+    //     }
+    // });
 });
 
+router.get('/user', async (req,res) => {
+    try{
+        const userData = await User.findOne({email: req.query.email}, {firstName: 1, lastName: 1, email: 1})
+        // check if a user found
+        if (!userData){ 
+            return res.status(404).send({error: "No user was found"})
+        }
+        // send user data 
+        res.status(200).send(userData);
 
-router.get('/user', function(req,res) {
-    const email = req.query.email;
-    console.log("Email: " + email);
-    User.findOne({email: email}, {firstName: 1, lastName: 1, email: 1}, (err, userData) => {
-        if (userData === null) {
-            console.log("not found");
-            res.status(404).send('Error: server error');
-        }
-        else {
-            console.log(userData);
-            res.status(200).send(userData);
-        }
-    });
+    } catch(e){
+        res.status(500).send(e);
+    }
 });
 
-
-router.post('/user/update', function(req,res) {
+// can handle user profile changes
+router.post('/user/update', async (req, res) => {
     // TODO logic for if param is null, don't update 
-    const email  = req.query.email;
-    const newFirstName = req.query.first;
-    const newLastName = req.query.last;
-    console.log(email);
-    User.updateOne(
-        { email: email },
-        { $set: { firstName: newFirstName, lastName: newLastName } }, 
-        (err, updates) => {
-            if (err) {
-                res.status(404).send('Could not post');
-            }
+    try{
+        const email  = req.query.email;
+        const newFirstName = req.query.firstName;
+        const newLastName = req.query.lastName;
 
-            else {
-                res.status(200).send(updates)
-            }
+        if (!email || !newFirstName || !newLastName){
+            return res.status(400).send({error: "invalid update params"})
         }
-    )
-    
+
+        const updates = await User.updateOne( { email: email },
+            { $set: { firstName: newFirstName, lastName: newLastName } })
+        
+        res.status(200).send(updates);
+
+    }catch (e){
+        res.status(500).send(e);
+    }
+
 });
 
 

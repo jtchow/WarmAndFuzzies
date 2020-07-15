@@ -23,7 +23,7 @@ export default class Bag extends Component{
         axios.get("http://localhost:5000/notes/view", {params: {email: this.state.sender}})
         .then(response => {
             console.log(response.data);
-            if(response.status == 200){
+            if(response.status === 200){
                 this.setState({
                     notes: response.data
                 });

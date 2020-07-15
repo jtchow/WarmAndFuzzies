@@ -54,6 +54,7 @@ class Login extends React.Component
 
             }, (error) => {
                 console.log(error);
+                // CREATE SOME ERROR POP UP HERE OR SOMETHING!
 
             });           
     }

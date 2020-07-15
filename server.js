@@ -9,14 +9,12 @@ require('dotenv').config();
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
 
-// cookies 
-
-
-
-
 // setup express
 const app = express();
 app.use(express.json());
+// define routes
+app.use('/', logins);
+app.use('/notes', notes);
 
 // set up express-session
 app.use(cookieParser());
@@ -45,7 +43,9 @@ const port = process.env.PORT || 5000;
 // }));
 
 // create mongoDB connection with my admin credentials 
-const uri = process.env.ATLAS_URI;
+//const uri = process.env.ATLAS_URI;
+
+const uri = "mongodb://127.0.0.1:27017/warm-and-fuzzies"
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
 );
 const connection = mongoose.connection;
@@ -53,13 +53,10 @@ connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 });
 
-
 app.use(cors({origin: true, credentials: true}));
 
 
-// define routes
-app.use('/', logins);
-app.use('/notes', notes);
+
 
 
 // start server 

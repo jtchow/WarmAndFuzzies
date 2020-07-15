@@ -54,8 +54,8 @@ import {withRouter} from 'react-router';
         axios.post("http://localhost:5000/user/update", null, {
             params: {
                 email: this.state.username,
-                first: this.state.first,
-                last: this.state.last
+                firstName: this.state.first,
+                lastName: this.state.last
             }  
         })
         .then(res => console.log(res.data));
