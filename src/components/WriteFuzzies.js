@@ -43,6 +43,8 @@ export default class WriteFuzzies extends React.Component
                 this.setState({
                     writtenTo: response.data.writtenTo
                 });
+            }).catch((e) => {
+                alert("There was an issue getting users written to")
             })
 
     }

@@ -6,11 +6,8 @@ let User = require('../models/user.model');
 
 // View notes endpoint 
 router.get('/view/:email', async (req,res) =>  {
-    const userEmail = req.params.email;
-    console.log(req.params);
-    console.log(userEmail);
     try{
-        const notes = await Note.find({recipient: userEmail}) 
+        const notes = await Note.find({recipient: req.params.email}) 
         if (!notes){
             return res.status(204).send("This user has received no notes");
         }
@@ -31,7 +28,7 @@ router.post('/send', async (req,res) => {
             recipient,
             contents
         });
-
+        // save note and update user's writtenTo Array
         const note = await newNote.save();
         const update = await User.update(
             { email: sender },
@@ -45,8 +42,6 @@ router.post('/send', async (req,res) => {
 
 });
 
-
-
 // Get list of all users written to. Return value: cursor with list of emails
 router.get('/users-written-to', async (req,res)=> {
     try{
@@ -56,7 +51,6 @@ router.get('/users-written-to', async (req,res)=> {
             return res.status(204).send(users) // no users written to 
         }
         res.status(200).send(users);
-
     }catch(e){
         res.status(500).send(e);
     }

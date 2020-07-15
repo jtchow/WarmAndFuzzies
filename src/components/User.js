@@ -27,8 +27,8 @@ export default class UserView extends React.Component
                     last: response.data.lastName
                 })
             })
-            .catch(function (error){
-                console.log(error);
+            .catch( (error)=>{
+                alert("unable to load user information. Please refresh the page")
             })
     }
 

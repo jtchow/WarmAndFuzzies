@@ -42,7 +42,7 @@ export default class Bag extends Component{
                 })
             }).catch((e) => {
                 console.log(e);
-                alert("There was an issue getting the user information")
+                alert("There was an issue getting the user information. Please refresh the page")
             })
     }
 
