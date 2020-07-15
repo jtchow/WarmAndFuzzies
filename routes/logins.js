@@ -7,10 +7,7 @@ let User = require('../models/user.model');
 
 
 router.post('/signup', async (req,res) =>  {
-    const firstName = req.body.firstName;
-    const lastName = req.body.lastName; 
-    const email = req.body.email;
-    const password = req.body.password;
+    const {firstName, lastName, email, password} = req.body;
 
     try{
         // Check if the email is in use already
@@ -27,7 +24,6 @@ router.post('/signup', async (req,res) =>  {
             email,
             password
         });     
-        // FIX PASSWORD ENCRYPTION LATER! 
         newUser.password = newUser.generateHash(newUser.password);
         await newUser.save()
         res.status(201).send(newUser);
@@ -100,9 +96,7 @@ router.get('/user', async (req,res) => {
 router.post('/user/update', async (req, res) => {
     // TODO logic for if param is null, don't update 
     try{
-        const email  = req.query.email;
-        const newFirstName = req.query.firstName;
-        const newLastName = req.query.lastName;
+        const {email, firstName:newFirstName, lastName:newLastName} = req.query;
 
         if (!email || !newFirstName || !newLastName){
             return res.status(400).send({error: "invalid update params"})

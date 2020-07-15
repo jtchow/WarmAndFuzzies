@@ -12,14 +12,12 @@ var cookieParser = require('cookie-parser');
 // setup express
 const app = express();
 app.use(express.json());
-app.use(cors())
+app.use(cors({origin: true, credentials: true}));
+
 // define routes
 app.use('/', logins);
 app.use('/notes', notes);
-// app.use((req, res, next) => {
-//     res.header('Access-Control-Allow-Origin', '*');
-//     next();
-// });
+
 
 // set up express-session
 app.use(cookieParser());
@@ -58,7 +56,6 @@ connection.once('open', () => {
     console.log("MongoDB database connection established successfully");
 });
 
-app.use(cors({origin: true, credentials: true}));
 
 
 

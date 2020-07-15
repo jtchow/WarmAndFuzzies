@@ -15,46 +15,47 @@ export default class Bag extends Component{
             firstName: "", // need to pass this from somewhere?
             lastName: "",
             userID: "",
-            notes: [] // get request will fill this array with notes
+            notes: [], // get request will fill this array with notes
+            errorMessage: null 
         }
     }
 
-    componentWillMount(){
-        axios.get("http://localhost:5000/notes/view", {params: {email: this.state.sender}})
+    componentDidMount(){
+        axios.get("http://localhost:5000/notes/view/" + this.state.email)
         .then(response => {
-            console.log(response.data);
-            if(response.status === 200){
-                this.setState({
-                    notes: response.data
-                });
-            }
+            this.setState({
+                notes: response.data // should be an array of notes
+            });
         })
         .catch((error) =>{
-            console.log(error);
+            this.setState({errorMessage: "Sorry, unable to retrieve your notes right now"})
+            alert("There was an issue retriving your notes")
         })
 
         axios.get('http://localhost:5000/user', {          
             params: {email: this.state.email}
         })
             .then(response => {
-                console.log(response);
                 this.setState({
                     firstName: response.data.firstName,
                     lastName: response.data.lastName
                 })
+            }).catch((e) => {
+                console.log(e);
+                alert("There was an issue getting the user information")
             })
-
     }
 
     render(){
-        var notes = this.state.notes;
+        const notes = this.state.notes;
         return(
             <div className = "container" style = {{background: "white"}}>
                 <h1>{this.state.firstName}'s Bag</h1>
+                <p>{this.state.errorMessage}</p>
                 {
                     notes.map(note =>
                     {
-                        return <Note sender = {note.sender} content = {note.contents} />
+                        return <Note sender = {note.sender} content = {note.contents} key = {note._id}/>
                     })
                 }
 

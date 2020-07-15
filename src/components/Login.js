@@ -19,8 +19,6 @@ class Login extends React.Component
     {
         event.preventDefault();
 
-        console.log(this.state);
-
         const login = {
             email: this.state.email,
             password: this.state.password,

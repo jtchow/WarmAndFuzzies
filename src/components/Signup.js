@@ -21,9 +21,6 @@ class Signup extends React.Component
     handleSubmit(event)
     {
         event.preventDefault();
-        // do some validation here
-
-        console.log(this.state);
 
         // create User Object with information from form/state
         const newUser = {
@@ -38,7 +35,7 @@ class Signup extends React.Component
             this.props.cookies.set('user', this.state.email, {path: '/'});
             this.props.history.push('/write');
           }).catch((error) => {
-                this.setState({errorMessage: error.response.data.error})
+                alert(error.response.data.error)
           });
           
     }

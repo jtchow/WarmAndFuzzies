@@ -20,7 +20,6 @@ export default class WriteFuzzies extends React.Component
         };
 
         this.handleRecipientChange = this.handleRecipientChange.bind(this);
-        this.handleMessageChange = this.handleMessageChange.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateWrittenTo = this.updateWrittenTo.bind(this);
@@ -63,13 +62,6 @@ export default class WriteFuzzies extends React.Component
         this.setState({
             recipient: event.target.value
         });
-    }
-
-    handleMessageChange(event)
-    {
-        this.setState({
-            message: event.target.value
-        });      
     }
 
     handleFilterChange(event)
@@ -170,7 +162,7 @@ export default class WriteFuzzies extends React.Component
 
                     <div className="fuzzies-forms">
                         <br/>
-                        <textarea className="form-control" value={this.state.message} onChange={this.handleMessageChange} style={{height: "25vh"}}></textarea>
+                        <textarea className="form-control" value={this.state.message} onChange={(e) => {this.setState({message: e.target.value})}} style={{height: "25vh"}}></textarea>
                         
                         <br/>
                         <button type='submit' id="write-button" className="btn btn-primary mb-2">Put in bag!</button>

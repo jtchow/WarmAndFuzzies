@@ -5,46 +5,44 @@ let User = require('../models/user.model');
 
 
 // View notes endpoint 
-router.get('/view', function(req,res) {
+router.get('/view/:email', async (req,res) =>  {
     // TODO handle multiple documents returned here? 
-    const userEmail = req.query.email;
-    Note.find({recipient: userEmail},(err, notes)=>{
-        if(err) {
-            res.status(404).send(err);
+    const userEmail = req.params.email;
+    console.log(req.params);
+    console.log(userEmail);
+    try{
+        const notes = await Note.find({recipient: userEmail}) 
+        if (!notes){
+            return res.status(204).send("This user has received no notes");
         }
-        else {
-            console.log(notes);
-            res.status(200).send(notes);
-        }
-    });
+        res.status(200).send(notes)
+    }catch (e){
+        console.log("An error happened");
+        res.status(500).send(e)
+    }
 });
 
-
 // Send note endpoint
-router.post('/send', function(req,res) {
-    const sender = req.body.sender;
-    const recipient = req.body.recipient;
-    const contents = req.body.message;
+router.post('/send', async (req,res) => {
+    try{
+        const {sender, recipient, message:contents} = req.body;
+         // create new Note object for DB insertion
+        const newNote = new Note({
+            sender,
+            recipient,
+            contents
+        });
 
-    // create new Note object for DB insertion
-    const newNote = new Note({
-        sender,
-        recipient,
-        contents
-    });
+        const note = await newNote.save();
+        const update = await User.update(
+            { email: sender },
+            { $push: { writtenTo: recipient } })
+        res.status(200).send("Sent warm and fuzzy!")
 
-    console.log(newNote);
-    
-    // save note to DB and send response or error message
-    newNote.save();
 
-    // update user writtenTo array in DB
-    User.update(
-        { email: sender },
-        { $push: { writtenTo: recipient } }
-    )
-    .then(() => res.status(200).send('Sent warm and fuzzy!'))
-    .catch(err => res.status(500).json('Error: ' + err));
+    } catch (e) {
+        res.status(500).send(e);
+    }
 
 });
 
@@ -57,8 +55,8 @@ router.get('/users-all', function(req,res) {
         }
 
         else {
-            console.log("sending users");
-            console.log(users);
+           // console.log("sending users");
+           // console.log(users);
             res.status(200).send(users);
         }
     });
