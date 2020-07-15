@@ -48,13 +48,13 @@ class Signup extends React.Component
                 <form id="signup-form" onSubmit={this.handleSubmit}>
                     <div id="signup-container">
                     <label className="signup-label">First Name</label>
-                    <input className="form-control signup-input" value={this.state.first} onChange={(event) => {this.setState({first: event.target.value})}}></input>
+                    <input className="form-control signup-input" required value={this.state.first} onChange={(event) => {this.setState({first: event.target.value})}}></input>
                     <label className="signup-label">Last Name</label>
-                    <input className="form-control signup-input" value={this.state.last} onChange={(event) => this.setState({last: event.target.value})}></input>
+                    <input className="form-control signup-input" required value={this.state.last} onChange={(event) => this.setState({last: event.target.value})}></input>
                     <label className="signup-label">UCI Email</label>
-                    <input className="form-control signup-input" value={this.state.email} onChange={(event) => this.setState({email: event.target.value})}></input>
+                    <input className="form-control signup-input" required value={this.state.email} onChange={(event) => this.setState({email: event.target.value})}></input>
                     <label className="signup-label">Password</label>
-                    <input className="form-control signup-input" type="password" value={this.state.password} onChange={(event) => this.setState({password: event.target.value})}></input>
+                    <input className="form-control signup-input" required type="password" value={this.state.password} onChange={(event) => this.setState({password: event.target.value})}></input>
                     <p className = "errorMessage">{this.state.errorMessage}</p>
 
                     </div>

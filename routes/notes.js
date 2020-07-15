@@ -48,17 +48,18 @@ router.post('/send', async (req,res) => {
 
 
 // Get list of all users written to. Return value: cursor with list of emails
-router.get('/users-written-to', function(req,res) {
-    const currentUserEmail = req.query.email;
-    User.findOne({email: currentUserEmail}, {writtenTo: true}, (err, usersWrittenTo)=>{
-        if (err) {
-            res.status(404).send("Error: Could not retrieve written to user list");
+router.get('/users-written-to', async (req,res)=> {
+    try{
+        const currentUserEmail = req.query.email;
+        const users = await User.findOne({email: currentUserEmail}, {writtenTo: true})
+        if (!users){
+            return res.status(204).send(users) // no users written to 
         }
+        res.status(200).send(users);
 
-        else {
-            res.status(200).send(usersWrittenTo);
-        }
-    });
+    }catch(e){
+        res.status(500).send(e);
+    }
 });
 
 module.exports = router;
