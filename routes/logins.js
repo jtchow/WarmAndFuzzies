@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
-
-
 // Bring in the User Model
 let User = require('../models/user.model');
 
 
+// Sign Up Route
 router.post('/signup', async (req,res) =>  {
     const {firstName, lastName, email, password} = req.body;
 
@@ -66,6 +65,7 @@ router.post('/login', async (req,res) => {
 });
 
 // NOT SURE HOW THIS WOULD WORK (not in use right now)
+// right now we just remove the cookies in the frontend
 router.get('/logout', function(req,res) {
     res.send("Not implemented yet!")
     // req.session.destroy(function(err){
@@ -77,6 +77,7 @@ router.get('/logout', function(req,res) {
     // });
 });
 
+// Get user information
 router.get('/user', async (req,res) => {
     try{
         const userData = await User.findOne({email: req.query.email}, {firstName: 1, lastName: 1, email: 1})

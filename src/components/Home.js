@@ -3,7 +3,7 @@ import {useCookies} from 'react-cookie';
 
 
 // TODO add get request for user email to display first name in welcome message
-const Home = function(){
+const Home = ()=>{
     const [cookies] = useCookies(['user']);
     return(
             <div className = "container">

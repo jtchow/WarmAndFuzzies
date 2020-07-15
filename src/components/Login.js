@@ -31,10 +31,7 @@ class Login extends React.Component
                 this.props.history.push('/write');
 
             }, (error) => {
-                console.log(error);
                 alert(error.response.data.error);
-                // CREATE SOME ERROR POP UP HERE OR SOMETHING!
-
             });           
     }
 
@@ -46,9 +43,9 @@ class Login extends React.Component
                 <form id="login-form" onSubmit={this.handleSubmit}>
                     <div id="login-container">
                         <label className="login-label">Email</label>
-                        <input className="form-control login-input" value={this.state.email} onChange={(event) => this.setState({email: event.target.value})}></input>
+                        <input className="form-control login-input" required value={this.state.email} onChange={(event) => this.setState({email: event.target.value})}></input>
                         <label className="login-label">Password</label>
-                        <input className="form-control login-input" type="password" value={this.state.password} onChange={(event) => this.setState({password: event.target.value}) }></input>
+                        <input className="form-control login-input" type="password" required value={this.state.password} onChange={(event) => this.setState({password: event.target.value}) }></input>
                     </div>
                     <div className="forgot-password">
                         <a href="/forgot-password" id="forgot">Forgot password?</a>
