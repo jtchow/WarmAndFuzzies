@@ -1,43 +1,75 @@
 #write-fuzzies {
-    width: 42%;
-    display: inline-block;
-    margin-left: 29%;
-    margin-right: 29%;
-    padding: 20px;
-    border-radius: 15px;
-    margin-top: 5%;
-    text-align: center;
-    background-color: #f0f6fc;
-    border-style: solid;
-    border-color: rgba(60, 116, 180, 0.5);
-    border-width: 1px;
-    color: rgb(78, 81, 84);
-  }
+  position: fixed;
+  /* center the element */
+  right: 0;
+  left: 0;
+  margin-right: auto;
+  margin-left: auto;
 
-  #select-div {
-    margin-bottom: 30px;
+  width: 42%;
+  min-width: 450px;
+  display: inline-block;
+  margin-top: 60px;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  background-color: #f0f6fc;
+  border-style: solid;
+  border-color: rgba(60, 116, 180, 0.5);
+  border-width: 1px;
+  color: rgb(78, 81, 84);
+}
+
+form {
+  width: 98%;
+  min-width: 400px;
+}
+
+#select-div {
+  margin-bottom: 30px;
+}
+
+#write-label {
+  color: rgb(78, 81, 84);
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+.fuzzies-forms {
+  width: 92%;
+  margin-left: 4%;
+  margin-right: 4%;
+}
+
+#filter-select {
+  width: 30%;
+  margin-bottom: 5px;
+  float: right;
+}
+
+#recipient-select {
+  width: 68%;
+  float: left;
+}
+
+@media only screen and (max-device-width: 480px) {
+  #write-fuzzies {
+    min-width: 330px;
+    width: 90%;
+    margin-top: 30px;
+    padding: 20px;
   }
   
+  form {
+    min-width: 200px;
+    width: 98%;
+  }
 
   #write-label {
-    color: rgb(78, 81, 84);
-    margin-top: 1%;
-    margin-bottom: 1%;
+    font-size: 20px;
   }
-  
-  .fuzzies-forms {
-    width: 92%;
-    margin-left: 4%;
-    margin-right: 4%;
+
+  #write-button {
+    width: 100%;
   }
-  
-  #filter-select {
-    width: 30%;
-    margin-bottom: 5px;
-    float: right;
-  }
-  
-  #recipient-select {
-    width: 68%;
-    float: left;
-  }
+}
