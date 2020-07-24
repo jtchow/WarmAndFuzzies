@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import './EditUser.css';
 
 export default class UserView extends React.Component
 {
@@ -42,9 +43,7 @@ export default class UserView extends React.Component
                     <h4>Name: {this.state.first + " " + this.state.last}</h4>
                     <h5>Email: {this.state.email}</h5>
                     <br />
-                    <form method="get" action="/user-profile/edit">
-                        <button type="submit" id="edit-profile-button" className="btn btn-primary mb-2">Edit Profile</button>
-                </form>
+                    <a className = "btn" href = "/user-profile/edit" id="edit-profile-button" className="btn btn-primary mb-2">Edit Profile</a>
                 </div>
             </div>
         )
