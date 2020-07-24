@@ -17,6 +17,10 @@ const noteSchema = new Schema(
         contents: {
             type: String,
             required: true
+        },
+        anonymous: {
+            default: false, 
+            type: Boolean
         }
     },
 

@@ -58,9 +58,11 @@ export default class Bag extends Component{
                     {
                         notes.map(note =>
                         {
+                            console.log(note);
+
                             return (
                                 <div className = "item">
-                                    <Note sender = {note.sender} content = {note.contents} key = {note._id}/>
+                                    <Note sender = {note.sender} anonymous = {note.anonymous} content = {note.contents} key = {note._id}/>
                                 </div>
                                 
                             )
