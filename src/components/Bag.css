@@ -21,6 +21,8 @@
 .masonry { /* Masonry container */
     column-count: 3;
     column-gap: 1em;
+    margin: 1em auto;
+    max-width: 900px;
     
   }
   
@@ -33,3 +35,32 @@
 #bag h1{
     padding: 1%
 }
+
+/* Masonry on large screens */
+@media only screen and (min-width: 1500px) {
+    .masonry {
+      column-count: 4;
+    }
+  }
+  
+  /* Masonry on medium-sized screens */
+  @media only screen and (max-width: 1500px) and (min-width: 1200px) {
+    .masonry {
+      column-count: 3;
+      
+    }
+  }
+  
+  /* Masonry on small screens */
+  @media only screen and (max-width: 1200px) and (min-width:750px) {
+    .masonry {
+      column-count: 2;
+    }
+  }
+
+   /* Masonry on small screens */
+   @media only screen and (max-width: 750px) and (min-width: 300px) {
+    .masonry {
+      column-count: 1;
+    }
+  }
