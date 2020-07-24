@@ -1,15 +1,12 @@
 import React from 'react';
 
-
-// PROPS
-// sender
-// contents
 const Note = (props) => {
     return(
-        <div className = "container">
-            <p>{props.content}</p>
-            <p><strong>From: {props.sender}</strong></p>
+        <div className="card" style={{"width": "18rem"}}>
+        <div className="card-body">
+          <p className="card-text">{props.content}</p>
         </div>
+      </div>
     );
 }
 

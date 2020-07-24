@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import Note from './Note.js';
 import axios from 'axios';
+import './Bag.css';
 
 
 // view all notes in grid format
@@ -48,16 +49,27 @@ export default class Bag extends Component{
 
     render(){
         const notes = this.state.notes;
+        const heading = (<h1>Your Bag</h1>)
         return(
-            <div className = "container" style = {{background: "white"}}>
-                <h1>{this.state.firstName}'s Bag</h1>
-                <p>{this.state.errorMessage}</p>
-                {
-                    notes.map(note =>
+            <div id = "bag">
+                {this.state.errorMessage || heading}
+                <div>
+                    <div className = "masonry">
                     {
-                        return <Note sender = {note.sender} content = {note.contents} key = {note._id}/>
-                    })
-                }
+                        notes.map(note =>
+                        {
+                            return (
+                                <div className = "item">
+                                    <Note sender = {note.sender} content = {note.contents} key = {note._id}/>
+                                </div>
+                                
+                            )
+                        })
+                    }
+                    </div>
+                  
+                </div>
+
 
             </div>
         );

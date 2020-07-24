@@ -1,0 +1,35 @@
+#bag{
+    margin-right: 10%;
+    margin-left: 10%;
+    
+  
+    width: 80%;
+    min-width: 450px;
+    display: inline-block;
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    background-color: #f0f6fc;
+    border-style: solid;
+    border-color: rgba(60, 116, 180, 0.5);
+    border-width: 1px;
+    color: rgb(78, 81, 84);
+    overflow: auto;
+}
+
+.masonry { /* Masonry container */
+    column-count: 3;
+    column-gap: 1em;
+    
+  }
+  
+.item { /* Masonry bricks or child elements */
+    display: inline-block;
+    margin: 0 0 1em;
+    /* width: 100%; */
+}
+
+#bag h1{
+    padding: 1%
+}
