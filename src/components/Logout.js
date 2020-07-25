@@ -1,4 +1,5 @@
 import React from 'react';
+import "./Logout.css";
 
 
 class Logout extends React.Component
@@ -11,7 +12,7 @@ class Logout extends React.Component
     render()
     {
         return (
-            <div className = "container">
+            <div className = "logout">
             <h1>You have been logged out</h1>
 
             </div>
