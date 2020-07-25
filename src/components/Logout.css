@@ -18,4 +18,8 @@
     .logout {
         width: 90%;
     }
+
+    .logout > h1 {
+        font-size: 25px;
+    }
   }
