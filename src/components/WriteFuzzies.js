@@ -16,13 +16,15 @@ export default class WriteFuzzies extends React.Component
             writtenTo: [],
             message: '',
             filter: 'all',
-            filterText: 'Filter'
+            filterText: 'Filter',
+            anonymous: true
         };
 
         this.handleRecipientChange = this.handleRecipientChange.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.updateWrittenTo = this.updateWrittenTo.bind(this);
+        this.handleAnonymousChange = this.handleAnonymousChange.bind(this);
     }
 
     componentDidMount(){
@@ -75,9 +77,17 @@ export default class WriteFuzzies extends React.Component
         this.typeahead.getInstance().clear();
     }
 
+    handleAnonymousChange(event)
+    {
+        this.setState({
+            anonymous: event.target.checked
+        });
+    }
+
     handleSubmit(event)
     {
         event.preventDefault();
+        console.log(this.state);
 
         if(this.state.recipient === "")
         {
@@ -92,7 +102,8 @@ export default class WriteFuzzies extends React.Component
             const note = {
                 sender: this.state.sender, // this will be the current user's session id
                 recipient: this.state.recipient,
-                message: this.state.message
+                message: this.state.message,
+                anonymous: this.state.anonymous
             }
             axios.post("http://localhost:5000/notes/send", note)
                 .then(res => {
@@ -165,8 +176,10 @@ export default class WriteFuzzies extends React.Component
                     <div className="fuzzies-forms">
                         <br/>
                         <textarea className="form-control" value={this.state.message} onChange={(e) => {this.setState({message: e.target.value})}} style={{height: "25vh"}}></textarea>
-                        
-                        <br/>
+                        <div id="checkbox" className="form-check">
+                            <input type="checkbox" className="form-check-input" value={this.state.anonymous} onChange={this.handleAnonymousChange}></input>
+                            <label class="form-check-label">Send anonymously</label>
+                        </div>
                         <button type='submit' id="write-button" className="btn btn-primary mb-2">Put in bag!</button>
                     </div>
                 </form>
