@@ -38,3 +38,17 @@
 .errorMessage{
     color: red;
 }
+
+@media only screen and (max-device-width: 480px) {
+    #signup {
+        margin-top: 50px;
+        min-width: 330px;
+        width: 90%;
+        height: 460px;
+    }
+
+    #signup-button {
+        width: 90%;
+        margin: 10px 0;
+    }
+}
