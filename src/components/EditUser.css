@@ -4,7 +4,7 @@
     margin-left: auto;
     margin-right: auto;
     text-align: right;
-    margin-top: 8%;
+    margin-top: 100px;
   
     padding: 20px;
     border-radius: 15px;
@@ -17,13 +17,13 @@
   
   #edit-user-profile {
     width: 500px;
-    height: 315px;
+    height: 350px;
     margin-left: auto;
     margin-right: auto;
   
     padding: 20px;
     border-radius: 15px;
-    margin-top: 5%;
+    margin-top: 70px;
     text-align: center;
     background-color: #f0f6fc;
     border-style: solid;
@@ -36,18 +36,10 @@
     height: 40%;
   }
   
-  .edit-input {
-    width: 90%;
-    margin-left: 10%;
-  }
-  
- 
-  
   #profile-text-container {
     width: 55%;
     float: right;
-    margin-top: 2%;
-    margin-bottom: 2%;
+    margin: 20px 0;
     margin-right: 5%;
   }
   
@@ -60,7 +52,6 @@
   #profile-cancel-button {
     margin-right: 30%;
     float: right;
-    
   }
   
   #profile-save-button {
@@ -69,14 +60,14 @@
   }
   
   #profile-save-button, #profile-cancel-button {
-    margin-top: 2%;
+    margin-top: 20px;
   }
   
   .edit-label {
     width: 90%;
     margin-right: 5%;
     margin-left: 5%;
-    margin-bottom: 1%;
+    margin-bottom: 10px;
     text-align: left;
   }
   
@@ -84,5 +75,43 @@
     width: 90%;
     margin-right: 5%;
     margin-left: 5%;
-    margin-bottom: 5%;
+    margin-bottom: 20px;
+  }
+
+  @media only screen and (max-device-width: 480px) {
+    #user-profile {
+        margin-top: 50px;
+        min-width: 330px;
+        width: 90%;
+        height: 450px;
+    }
+
+    #profile-text-container {
+      float: center;
+      text-align: left;
+      width: 90%;
+    }
+
+    div.profile-picture {
+      float: center;
+      margin: 0 18%;
+    }
+
+    #edit-profile-button {
+      width: 100%;
+    }
+
+    #edit-user-profile {
+      margin-top: 50px;
+      min-width: 330px;
+      width: 90%;
+      height: 400px;
+    }
+
+    #profile-save-button, #profile-cancel-button {
+      float: none;
+      width: 90%;
+      margin: 0 5%;
+      margin-top: 10px;
+    }
   }
