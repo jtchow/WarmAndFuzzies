@@ -13,7 +13,7 @@ router.get('/view/:email', async (req,res) =>  {
         }
         res.status(200).send(notes)
     }catch (e){
-        console.log("An error happened");
+        console.log("An error happened!");
         res.status(500).send(e)
     }
 });
