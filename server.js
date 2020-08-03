@@ -48,13 +48,13 @@ const port = process.env.PORT || 5000;
 // create mongoDB connection with my admin credentials 
 //const uri = process.env.ATLAS_URI;
 
-const uri = "mongodb://127.0.0.1:27017/warm-and-fuzzies"
-mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
-);
-const connection = mongoose.connection;
-connection.once('open', () => {
-    console.log("MongoDB database connection established successfully");
-});
+// const uri = "mongodb://127.0.0.1:27017/warm-and-fuzzies"
+// mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
+// );
+// const connection = mongoose.connection;
+// connection.once('open', () => {
+//     console.log("MongoDB database connection established successfully");
+// });
 
 
 
