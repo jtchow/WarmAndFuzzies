@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const multer = require('multer')
+const sharp = require('sharp')
 // Bring in the User Model
 let User = require('../models/user.model');
 
@@ -128,6 +130,54 @@ router.post('/user/update', async (req, res) => {
     }
 
 });
+
+// USER PROFILE PICTURES
+
+// uploading middleware
+const upload = multer({
+    limits: {
+        fileSize: 1000000
+    }, 
+    fileFilter(req, file, cb){
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)){
+            return cb(new Error("Please upload a jpdg, jpeg, or png file"))
+        }
+        cb(undefined, true)
+    }
+})
+
+// Adding/Updating a profile picture
+// must pass in email (for now) as a query
+router.post('/user/profile-pic', upload.single('profile-pic'), async (req, res) => {
+    const buffer = await sharp(req.file.buffer).resize({width: 250, height:250}).png().toBuffer()
+    // get the user 
+    const user = await User.findOne({email: req.query.email});
+    if (!user){
+        return res.status(400).send({error: "No user with that email was found"})
+    }
+    // save the profile picture
+    user.picture = buffer 
+    await user.save()
+    res.send()
+}, (error, req, res, next) => {
+    res.status(400).send({error: error.message});
+})
+
+// getting profile picture
+router.get('/user/profile-pic', async (req, res) => {
+    try{
+        const user = await User.findOne({email: req.query.email});
+        if (!user){
+            return res.status(400).send("No user was found with that email");
+        }
+        // fetch and return the profile picture! 
+        res.set('Content-Type', 'image/jpg')
+        res.send(user.picture);
+    }
+    catch (e) {
+        res.status(404).send(e);
+    }
+})
 
 
 module.exports = router;

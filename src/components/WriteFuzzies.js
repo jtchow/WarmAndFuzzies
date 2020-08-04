@@ -175,7 +175,11 @@ export default class WriteFuzzies extends React.Component
 
                     <div className="fuzzies-forms">
                         <br/>
-                        <textarea className="form-control" value={this.state.message} onChange={(e) => {this.setState({message: e.target.value})}} style={{height: "25vh"}}></textarea>
+                        <textarea 
+                            className="form-control" value={this.state.message} 
+                            onChange={(e) => {this.setState({message: e.target.value})}} 
+                            style={{height: "25vh"}}
+                        ></textarea>
                         <div id="checkbox" className="form-check">
                             <input type="checkbox" className="form-check-input" value={this.state.anonymous} onChange={this.handleAnonymousChange}></input>
                             <label class="form-check-label">Send anonymously</label>

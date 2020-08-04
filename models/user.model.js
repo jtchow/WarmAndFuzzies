@@ -38,6 +38,10 @@ const userSchema = new Schema(
         writtenTo: {
             type: Array, 
             default: []
+        },
+
+        picture : {
+            type: Buffer
         }
     }, 
     
