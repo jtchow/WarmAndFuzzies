@@ -25,6 +25,7 @@ router.post('/signup', async (req,res) =>  {
             email,
             password
         });     
+
         newUser.password = newUser.generateHash(newUser.password);
         await newUser.save()
         res.status(201).send(newUser);
@@ -149,7 +150,7 @@ const upload = multer({
 // Adding/Updating a profile picture
 // must pass in email (for now) as a query
 router.post('/user/profile-pic', upload.single('profile-pic'), async (req, res) => {
-    const buffer = await sharp(req.file.buffer).resize({width: 250, height:250}).png().toBuffer()
+    const buffer = await sharp(req.file.buffer).resize({width: 200, height:200}).png().toBuffer()
     // get the user 
     const user = await User.findOne({email: req.query.email});
     if (!user){
@@ -164,6 +165,7 @@ router.post('/user/profile-pic', upload.single('profile-pic'), async (req, res) 
 })
 
 // getting profile picture
+// if no profile picture, returns a 204 No Content
 router.get('/user/profile-pic', async (req, res) => {
     try{
         const user = await User.findOne({email: req.query.email});
@@ -171,13 +173,17 @@ router.get('/user/profile-pic', async (req, res) => {
             return res.status(400).send("No user was found with that email");
         }
         // fetch and return the profile picture! 
-        res.set('Content-Type', 'image/jpg')
-        res.send(user.picture);
+        if (user.picture){
+            res.set('Content-Type', 'image/jpg')
+            return res.send(user.picture);
+        }
+        
+        res.status(204).send("No profile picture found");
+       
     }
     catch (e) {
         res.status(404).send(e);
     }
 })
-
 
 module.exports = router;

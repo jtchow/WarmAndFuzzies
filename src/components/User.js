@@ -12,6 +12,7 @@ export default class UserView extends React.Component
             email: this.props.cookies.get('user'),
             first: "",
             last: "",
+            pictureSrc: null
         }
     }
 
@@ -37,7 +38,9 @@ export default class UserView extends React.Component
     {
         return (
             <div className="container" id="user-profile">
-                <div className="profile-picture"></div>
+                <div className="profile-picture">
+                    <img alt = "No picture found" src = {'http://localhost:5000/user/profile-pic?email=' + this.state.email}></img>
+                </div>
                 <div id="profile-text-container">
                     <h2>Profile</h2>
                     <h4>Name: {this.state.first + " " + this.state.last}</h4>
