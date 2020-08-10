@@ -175,7 +175,7 @@ router.get('/user/profile-pic', async (req, res) => {
         // fetch and return the profile picture! 
         if (user.picture){
             res.set('Content-Type', 'image/jpg')
-            return res.send(user.picture);
+            return res.status(200).send(user.picture);
         }
         
         res.status(204).send("No profile picture found");

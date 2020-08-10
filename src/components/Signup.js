@@ -33,7 +33,7 @@ class Signup extends React.Component
         // store in database (will prob have to change localhost to something else)
         axios.post('http://localhost:5000/signup', newUser).then(response => {
             this.props.cookies.set('user', this.state.email, {path: '/'});
-            this.props.history.push('/write');
+            this.props.history.push('/write'); 
           }).catch((error) => {
                 alert(error.response.data.error)
           });

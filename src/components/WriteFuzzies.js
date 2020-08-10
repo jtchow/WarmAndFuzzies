@@ -182,7 +182,7 @@ export default class WriteFuzzies extends React.Component
                         ></textarea>
                         <div id="checkbox" className="form-check">
                             <input type="checkbox" className="form-check-input" value={this.state.anonymous} onChange={this.handleAnonymousChange}></input>
-                            <label class="form-check-label">Send anonymously</label>
+                            <label className="form-check-label">Send anonymously</label>
                         </div>
                         <button type='submit' id="write-button" className="btn btn-primary mb-2">Put in bag!</button>
                     </div>
