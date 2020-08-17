@@ -1,18 +1,39 @@
-// define requirements
+// dependencies
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+var cookieParser = require('cookie-parser');
+const session = require('express-session');
+const redis = require("redis");
+var redisStore = require('connect-redis')(session);
+var redisClient = redis.createClient();
+
+redisClient.on('connect', function() {
+    console.log("Redis client connected");
+})
+redisClient.on('error', (err) => {
+    console.log('Redis error: ', err);
+  });
+
 
 const logins = require('./routes/logins');
 const notes = require('./routes/notes');
+
 require('dotenv').config();
-var cookieParser = require('cookie-parser');
-//const session = require('express-session');
 
 // setup express
 const app = express();
 app.use(express.json());
 app.use(cors({origin: true, credentials: true}));
+app.use(session({
+    secret: 'mysecret', 
+    name: '_testRedis', 
+    cookie: {secure: false}, // will expire in 1 min
+    // will need to change host if we deploy
+    store: new redisStore({host: 'localhost', port: 6379, client: redisClient}), 
+    saveUnitialized: true, 
+    resave: false
+}))
 
 // define routes
 app.use('/', logins);
@@ -24,26 +45,6 @@ app.use(cookieParser());
 //app.use(session({secret: "It's a secret"}));
 
 const port = process.env.PORT || 5000;
-
-// REDIS STUFF (COMMENTED OUT FOR NOW)
-
-// const redis = require('redis');
-// const redisClient = redis.createClient();
-// const redisStore = require('connect-redis')(session);
-
-// // setup redis connection 
-// redisClient.on('error', (err) => {
-//   console.log('Redis error: ', err);
-// });
-
-// app.use(session({
-//   secret: 'ThisIsHowYouUseRedisSessionStorage',
-//   name: '_redisPractice',
-//   resave: false,
-//   saveUninitialized: false,
-//   cookie: { secure: false }, // Note that the cookie-parser module is no longer needed
-//   store: new redisStore({ host: 'localhost', port: 6379, client: redisClient, ttl: 86400 }),
-// }));
 
 // create mongoDB connection with my admin credentials 
 //const uri = process.env.ATLAS_URI;

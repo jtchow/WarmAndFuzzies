@@ -49,18 +49,15 @@ router.post('/login', async (req,res) => {
             return res.status(401).send({error: "Incorrect password"})
         }
 
-        // send back user information (CHANGE THIS LATER!)
-        console.log(user);
-        const userInfo = {
-            email: user.email, 
-            firstName: user.firstName, 
-            lastName: user.lastName
+        // future redis integration:
+        // if successful login, then store db result in req.session.key
+        if (user){
+            req.session.key = user; // should it be all data or just user_id?
+            console.log(req.session);
+            console.log("Creating session key"); 
+            req.session.save();
+            res.status(200).send({"success": true, "message": "Login success."});
         }
-
-        // activate session somehow?
-
-        res.status(200).send(userInfo);
-
 
     } catch(e){
         res.status(500).send(e);
@@ -70,14 +67,21 @@ router.post('/login', async (req,res) => {
 // NOT SURE HOW THIS WOULD WORK (not in use right now)
 // right now we just remove the cookies in the frontend
 router.get('/logout', function(req,res) {
-    res.send("Not implemented yet!")
-    // req.session.destroy(function(err){
-    //     if(err){
-    //         res.status(500).send('Error: could not log out');
-    //     } else {
-    //         res.status(200).send('Logged out');     
-    //     }
-    // });
+    // console.log(req.session.key);
+    console.log(req.session);
+    //console.log(req.headers);
+    if(req.session.key){
+        //console.log(req.session.key);
+        // TODO save user data from redis session back into MongoDB 
+
+        // destroy session
+        // Todo: check if persistance worked
+        req.session.destroy();
+        res.status(200).send("logged out");
+    }
+    else{
+        res.status(400).send({error: "You are not logged in"});
+    }
 });
 
 // Get user information

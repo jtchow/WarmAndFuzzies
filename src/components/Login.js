@@ -25,9 +25,11 @@ class Login extends React.Component
         }
 
         // check information with database
+        console.log("logging in!");
         axios.post('http://localhost:5000/login', login)
             .then((response) => {
                 this.props.cookies.set('user', this.state.email, {path: '/'});
+                console.log(response); 
                 this.props.history.push('/write');
 
             }, (error) => {
