@@ -8,12 +8,12 @@ const redis = require("redis");
 var redisStore = require('connect-redis')(session);
 var redisClient = redis.createClient();
 
-redisClient.on('connect', function() {
+redisClient.on('connect', function () {
     console.log("Redis client connected");
 })
 redisClient.on('error', (err) => {
     console.log('Redis error: ', err);
-  });
+});
 
 
 const logins = require('./routes/logins');
@@ -24,14 +24,14 @@ require('dotenv').config();
 // setup express
 const app = express();
 app.use(express.json());
-app.use(cors({origin: true, credentials: true}));
+app.use(cors({ origin: true, credentials: true }));
 app.use(session({
-    secret: 'mysecret', 
-    name: '_testRedis', 
-    cookie: {secure: false}, // will expire in 1 min
+    secret: 'mysecret',
+    name: '_testRedis',
+    cookie: { secure: false },
     // will need to change host if we deploy
-    store: new redisStore({host: 'localhost', port: 6379, client: redisClient}), 
-    saveUnitialized: true, 
+    store: new redisStore({ host: 'localhost', port: 6379, client: redisClient }),
+    saveUnitialized: true,
     resave: false
 }))
 
@@ -46,11 +46,11 @@ app.use(cookieParser());
 
 const port = process.env.PORT || 5000;
 
-// create mongoDB connection with my admin credentials 
+// create mongoDB connection with my admin credentials (not connected rn)
 //const uri = process.env.ATLAS_URI;
 
 //const uri = process.env.ATLAS_URI
-const uri = "mongodb://127.0.0.1:27017/warm-and-fuzzies";
+const uri = "mongodb://127.0.0.1:27017/warm-and-fuzzies"; // I have mine set up locally for now
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
 );
 const connection = mongoose.connection;
