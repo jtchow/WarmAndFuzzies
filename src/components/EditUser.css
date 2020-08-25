@@ -30,7 +30,7 @@
   
   #edit-user-profile {
     width: 500px;
-    height: 350px;
+    height: 425px;
     margin-left: auto;
     margin-right: auto;
   
@@ -118,7 +118,7 @@
       margin-top: 50px;
       min-width: 330px;
       width: 90%;
-      height: 400px;
+      height: 460px;
     }
 
     #profile-save-button, #profile-cancel-button {
