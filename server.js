@@ -10,6 +10,7 @@ const notes = require('./routes/notes');
 
 require('dotenv').config();
 
+
 // redis connection
 let redisStore = require('connect-redis')(session);
 let redisClient = redis.createClient({
@@ -28,11 +29,12 @@ redisClient.on('error', (err) => {
 // setup express
 const app = express();
 app.use(express.json());
+//app.use(cookieParser());
 app.use(cors({ origin: true, credentials: true }));
 app.use(session({
     secret: 'mysecret',
     name: '_testRedis',
-    cookie: { secure: false },
+    cookie: { secure: false, maxAge: 31536000000},
     // will need to change host if we deploy
     store: new redisStore({client: redisClient }),
     //    store: new redisStore({ host: 'localhost', port: 6379, client: redisClient }),
@@ -46,8 +48,6 @@ app.use('/notes', notes);
 
 
 // set up express-session
-app.use(cookieParser());
-//app.use(session({secret: "It's a secret"}));
 
 const port = process.env.PORT || 5000;
 

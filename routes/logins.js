@@ -37,6 +37,7 @@ router.post('/signup', async (req,res) =>  {
 
 // Route for Login Process
 router.post('/login', async (req,res) => {
+    console.log("loggingin");
     try{
         // Attempt to fetch user associated with given email
         const user = await User.findOne({email: req.body.email})
@@ -55,8 +56,11 @@ router.post('/login', async (req,res) => {
             req.session.key = user; // should it be all data or just user_id?
             console.log(req.session);
             console.log("Creating session key"); 
+            console.log(req.sessionID);
             req.session.save();
-            res.status(200).send({"success": true, "message": "Login success."});
+            res.end('done');
+            //res.set({'Set-Cookie': '_testRedis=' + "s%3A" + req.session.id})
+            //res.status(200).send({"success": true, "message": "Login success."});
         }
 
     } catch(e){
