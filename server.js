@@ -5,9 +5,18 @@ const cors = require('cors');
 var cookieParser = require('cookie-parser');
 const session = require('express-session');
 const redis = require("redis");
-var redisStore = require('connect-redis')(session);
-var redisClient = redis.createClient();
+const logins = require('./routes/logins');
+const notes = require('./routes/notes');
 
+require('dotenv').config();
+
+// redis connection
+let redisStore = require('connect-redis')(session);
+let redisClient = redis.createClient({
+    host: process.env.REDIS_HOST, 
+    port: process.env.REDIS_PORT, 
+    password: process.env.REDIS_PASSWORD
+});
 redisClient.on('connect', function () {
     console.log("Redis client connected");
 })
@@ -15,11 +24,6 @@ redisClient.on('error', (err) => {
     console.log('Redis error: ', err);
 });
 
-
-const logins = require('./routes/logins');
-const notes = require('./routes/notes');
-
-require('dotenv').config();
 
 // setup express
 const app = express();
@@ -30,7 +34,8 @@ app.use(session({
     name: '_testRedis',
     cookie: { secure: false },
     // will need to change host if we deploy
-    store: new redisStore({ host: 'localhost', port: 6379, client: redisClient }),
+    store: new redisStore({client: redisClient }),
+    //    store: new redisStore({ host: 'localhost', port: 6379, client: redisClient }),
     saveUnitialized: true,
     resave: false
 }))
@@ -47,10 +52,10 @@ app.use(cookieParser());
 const port = process.env.PORT || 5000;
 
 // create mongoDB connection with my admin credentials (not connected rn)
-//const uri = process.env.ATLAS_URI;
+const uri = process.env.ATLAS_URI;
 
 //const uri = process.env.ATLAS_URI
-const uri = "mongodb://127.0.0.1:27017/warm-and-fuzzies"; // I have mine set up locally for now
+//const uri = "mongodb://127.0.0.1:27017/warm-and-fuzzies"; // I have mine set up locally for now
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }
 );
 const connection = mongoose.connection;

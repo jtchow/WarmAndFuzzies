@@ -67,7 +67,7 @@ router.post('/login', async (req,res) => {
 // NOT SURE HOW THIS WOULD WORK (not in use right now)
 // right now we just remove the cookies in the frontend
 router.get('/logout', function(req,res) {
-    // console.log(req.session.key);
+    console.log("Session Key: " + req.session.key);
     console.log(req.session);
     //console.log(req.headers);
     if(req.session.key){

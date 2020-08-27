@@ -40,7 +40,7 @@ const userSchema = new Schema(
             default: []
         },
 
-        picture : {
+        picture : { // should probably store this elsewhere later! 
             type: Buffer
         }
     }, 
