@@ -27,6 +27,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "redis": "^3.0.2",
+    "redis-commander": "^0.7.0",
     "redis-server": "^1.2.2",
     "sharp": "^0.25.4",
     "validator": "^13.1.1"

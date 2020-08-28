@@ -55,12 +55,12 @@ router.post('/login', async (req,res) => {
         if (user){
             req.session.key = user; // should it be all data or just user_id?
             console.log(req.session);
-            console.log("Creating session key"); 
+            console.log("Creating session key");
             console.log(req.sessionID);
             req.session.save();
-            res.end('done');
-            //res.set({'Set-Cookie': '_testRedis=' + "s%3A" + req.session.id})
-            //res.status(200).send({"success": true, "message": "Login success."});
+            res.set({'Set-Cookie': '_testRedis=' + "s%3A" + req.sessionID});
+            // res.end('done');
+            res.status(200).send({"success": true, "message": "Login success."});
         }
 
     } catch(e){

@@ -13,14 +13,15 @@ require('dotenv').config();
 
 // redis connection
 let redisStore = require('connect-redis')(session);
-let redisClient = redis.createClient({
-    host: process.env.REDIS_HOST, 
-    port: process.env.REDIS_PORT, 
-    password: process.env.REDIS_PASSWORD
-});
+// let redisClient = redis.createClient({
+//     host: process.env.REDIS_HOST, 
+//     port: process.env.REDIS_PORT, 
+//     password: process.env.REDIS_PASSWORD
+// });
+let redisClient = redis.createClient();
 redisClient.on('connect', function () {
     console.log("Redis client connected");
-})
+});
 redisClient.on('error', (err) => {
     console.log('Redis error: ', err);
 });
@@ -36,7 +37,7 @@ app.use(session({
     name: '_testRedis',
     cookie: { secure: false, maxAge: 31536000000},
     // will need to change host if we deploy
-    store: new redisStore({client: redisClient }),
+    store: new redisStore({ host: process.env.REDIS_HOST, port: process.env.REDIS_PORT, password: process.env.REDIS_PASSWORD, client: redisClient }),
     //    store: new redisStore({ host: 'localhost', port: 6379, client: redisClient }),
     saveUnitialized: true,
     resave: false
