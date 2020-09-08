@@ -26,7 +26,7 @@ class Login extends React.Component {
         axios.post('http://localhost:5000/login', login)
             .then((response) => {
                 this.props.cookies.set('user', this.state.email, { path: '/' });
-                console.log(response);
+                console.log('SUCCESS:', response);
                 this.props.history.push('/write');
 
             }, (error) => {

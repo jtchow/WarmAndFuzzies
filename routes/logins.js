@@ -60,7 +60,7 @@ router.post('/login', async (req,res) => {
             req.session.save();
             res.set({'Set-Cookie': '_testRedis=' + "s%3A" + req.sessionID});
             // res.end('done');
-            res.status(200).send({"success": true, "message": "Login success."});
+            res.status(200).send({"success": true, "message": "Login success.", "sessionID": req.sessionID});
         }
 
     } catch(e){

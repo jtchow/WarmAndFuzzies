@@ -30,7 +30,7 @@ export default class Bag extends Component {
             })
             .catch((error) => {
                 this.setState({ errorMessage: "Sorry, unable to retrieve your notes right now" })
-                alert("There was an issue retriving your notes")
+                alert("There was an issue retriving your notes: ", error)
             })
 
         axios.get('http://localhost:5000/user', {
